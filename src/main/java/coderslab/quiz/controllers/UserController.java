@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import coderslab.quiz.entities.User;
 import coderslab.quiz.repositories.UserRepository;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 public class UserController {
@@ -14,11 +15,16 @@ public class UserController {
         this.userRepository = userRepository;
     }
 
-    @GetMapping("/home")
-    public String home(){
-        //model.addAttribute("username","Użytkownik");
-        return "home";
-    }
+    @GetMapping("/")
+    @ResponseBody
+    public String home() { return "home"; }
+
+
+    @GetMapping("/admin")
+    @ResponseBody
+    public String admin() { return "admin"; }
+
+
 
     @GetMapping("/addUser")
     public String addUser(){
