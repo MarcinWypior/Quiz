@@ -3,6 +3,7 @@ package coderslab.quiz.entities;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
 @Entity
 public class User {
@@ -11,11 +12,26 @@ public class User {
     private Long id;
     @NotBlank
     private String nickName;
+
+    public User() {
+    }
+
+
     @NotBlank
     @Column(unique = true)
     @Email
     private String email;
     private boolean isAdmin;
+    @Size(min=6,max = 10)
+    private String password;
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getPassword() {
+        return password;
+    }
 
     @Override
     public String toString() {

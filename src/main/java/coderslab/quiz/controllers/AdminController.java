@@ -1,26 +1,24 @@
 package coderslab.quiz.controllers;
 
 
+import coderslab.quiz.repositories.UserRepository;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import coderslab.quiz.entities.User;
-import coderslab.quiz.repositories.UserRepository;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
-@Secured("ROLE_USER")
-@RequestMapping("/user")
-public class UserController {
+@Secured("ROLE_ADMIN")
+@RequestMapping("/admin")
+public class AdminController {
     private UserRepository userRepository;
 
-    public UserController(UserRepository userRepository) {
+    public AdminController(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
 
 
-    @GetMapping("/user")
-    public String user() { return "userPanel"; }
+    @GetMapping("/panel")
+    public String admin() { return "adminPanel"; }
 
 }
