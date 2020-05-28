@@ -21,11 +21,11 @@
         <tr>
             <td>${question.query}</td>
             <td>
-                <a href="/formCategory/${question.id}">Edytuj</a>
+                <a href="/formQuestion/${question.id}">Edytuj</a>
             </td>
         </tr>
     </c:forEach>
 </table>
-<a href="/formCategory">Dodaj</a>
+<a href="/formQuestion">Dodaj</a>
 </body>
 </html>

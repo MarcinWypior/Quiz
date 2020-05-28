@@ -57,10 +57,6 @@ public class Question {
         this.query = query;
     }
 
-    public void setOpenAnswer(boolean openAnswer) {
-        isOpenAnswer = openAnswer;
-    }
-
     public void setPicture(String picture) {
         this.picture = picture;
     }
@@ -75,11 +71,16 @@ public class Question {
         return query;
     }
 
-    public boolean isOpenAnswer() {
-        return isOpenAnswer;
-    }
 
     public String getPicture() {
         return picture;
+    }
+
+    public void setOpenAnswer(boolean openAnswer) {
+        isOpenAnswer = openAnswer;
+    }
+
+    public boolean isOpenAnswer() {
+        return isOpenAnswer;
     }
 }

@@ -69,7 +69,6 @@ public class UserController {
 
     //question
 
-
     @GetMapping("/formQuestion")
     public String formQuestion(Model model){
         model.addAttribute("question",new Question());
@@ -88,6 +87,18 @@ public class UserController {
         return "redirect:/questionList";
     }
 
+    @GetMapping("/formQuestion/{id}")
+    public String getQuestionForm(Model model, @PathVariable long id) {
+        model.addAttribute("question", questionRepository.findById(id));
+        return "questionForm";
+    }
 
+
+    @GetMapping("/questionList")
+    public String questionList(Model model){
+        model.addAttribute("questions",questionRepository.findAll());
+        model.addAttribute("category",categoryRepository.findAll());
+        return "questionList";
+    }
 
 }
