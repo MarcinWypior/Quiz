@@ -1,10 +1,7 @@
 package coderslab.quiz.entities;
 
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class Answer {
@@ -13,5 +10,9 @@ public class Answer {
     private Long id;
     private String text;
     private boolean isTrue;
+
+    @ManyToOne
+    private Question question;
+
 
 }

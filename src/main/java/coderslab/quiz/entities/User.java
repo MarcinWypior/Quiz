@@ -15,17 +15,10 @@ public class User {
     @Column(unique = true)
     @Email
     private String email;
-    private boolean isAdmin;
 
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", nickName='" + nickName + '\'' +
-                ", email='" + email + '\'' +
-                ", isAdmin=" + isAdmin +
-                '}';
-    }
+    private int isEnabled;
+
+
 
     public void setId(Long id) {
         this.id = id;
@@ -39,9 +32,7 @@ public class User {
         this.email = email;
     }
 
-    public void setAdmin(boolean admin) {
-        isAdmin = admin;
-    }
+
 
     public Long getId() {
         return id;
@@ -55,7 +46,21 @@ public class User {
         return email;
     }
 
-    public boolean isAdmin() {
-        return isAdmin;
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", nickName='" + nickName + '\'' +
+                ", email='" + email + '\'' +
+                ", isEnabled=" + isEnabled +
+                '}';
+    }
+
+    public void setIsEnabled(int isEnabled) {
+        this.isEnabled = isEnabled;
+    }
+
+    public int getIsEnabled() {
+        return isEnabled;
     }
 }
