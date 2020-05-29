@@ -10,7 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.ObjectError;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -22,6 +22,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 @Controller
 public class UserController {
@@ -63,7 +65,22 @@ public class UserController {
         boolean anyMatch = categoryRepository.findAll().stream().anyMatch(e -> e.getCategoryName().equalsIgnoreCase(category.getCategoryName()));
 
         if(anyMatch) {
-            bindingResult.addError( new ObjectError("categoryName","taka kategoria już istnieje") );
+
+            FieldError notUniqueCategoryName = new FieldError(
+                    "category",
+                    category.getCategoryName(),
+                    " ",
+                    true,
+                    new String[]{"jest już w użyciu"},
+                    new Object[]{},
+                    "jest już taka kategoria"
+            );
+            bindingResult.addError(notUniqueCategoryName);
+
+
+
+
+            bindingResult.addError( notUniqueCategoryName );
             return "categoryForm";
         }else {
             categoryRepository.save(category);
@@ -98,9 +115,9 @@ public class UserController {
 
         modelMap.addAttribute("file", file);
 
-        String [] elemnts=file.getName().split("\\.");
+        String [] elemnts=file.getOriginalFilename().split("\\.");
 
-        Path path1 = Paths.get("src/main/resources/static/uploadedFiles"+question.getId()+"."+elemnts[elemnts.length-1]);
+        Path path1 = Paths.get("src/main/resources/static/uploadedFiles/" + Timestamp.valueOf(LocalDateTime.now())+"."+elemnts[elemnts.length-1]);
 
         try {
             InputStream inputStream = new ByteArrayInputStream(file.getBytes());
@@ -112,8 +129,7 @@ public class UserController {
             e.printStackTrace();
         }
 
-
-                question.setPicture(path1.toString());
+        question.setPicture(path1.toString());
         questionRepository.save(question);
 
         return "redirect:/questionList";

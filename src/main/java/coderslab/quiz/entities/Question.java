@@ -11,7 +11,6 @@ public class Question {
     private Long id;
     private String query;
     private boolean isOpenAnswer;
-
     private String picture;
 
     @ManyToOne
