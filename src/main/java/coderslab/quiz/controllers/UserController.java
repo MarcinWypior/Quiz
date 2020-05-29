@@ -5,15 +5,23 @@ import coderslab.quiz.entities.Category;
 import coderslab.quiz.entities.Question;
 import coderslab.quiz.repositories.CategoryRepository;
 import coderslab.quiz.repositories.QuestionRepository;
+import coderslab.quiz.repositories.UserRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
-import coderslab.quiz.repositories.UserRepository;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
-import java.util.List;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 
 @Controller
 public class UserController {
@@ -25,6 +33,40 @@ public class UserController {
         this.userRepository = userRepository;
         this.categoryRepository= categoryRepository;
         this.questionRepository =questionRepository;
+    }
+
+
+    @GetMapping("/upload")
+    public String uploadFile(){
+        return "fileUpload";
+    }
+
+    @PostMapping("/uploadFileWithAddtionalData")
+    public String submit(
+            @RequestParam MultipartFile file, @RequestParam String name,
+            @RequestParam String email, ModelMap modelMap) {
+
+        modelMap.addAttribute("name", name);
+        modelMap.addAttribute("email", email);
+        modelMap.addAttribute("file", file);
+
+
+        Path path1 = Paths.get("/home/marcin/CL/QUIZ/src/main/resources/uploadedFiles",file.getOriginalFilename());
+
+        try {
+            InputStream inputStream = new ByteArrayInputStream(file.getBytes());
+            Files.copy(
+                    inputStream,
+                    path1,
+                    StandardCopyOption.REPLACE_EXISTING);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+
+
+        return "fileUpload";
     }
 
     @GetMapping("/home")
