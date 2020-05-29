@@ -30,5 +30,13 @@
     </c:forEach>
 </table>
 <a href="/formCategory">Dodaj</a>
+<br>
+
+<a href="questionList.jsp">Lista pytań</a>
+<br>
+<a href="categoryList.jsp">Lista kategorii</a>
+<br>
+<a href="/home">strona glowna</a>
+<br>
 </body>
 </html>
