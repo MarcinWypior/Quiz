@@ -1,8 +1,6 @@
 package coderslab.quiz.entities;
 
 
-import org.hibernate.validator.constraints.URL;
-
 import javax.persistence.*;
 import java.util.List;
 
@@ -13,7 +11,7 @@ public class Question {
     private Long id;
     private String query;
     private boolean isOpenAnswer;
-    @URL
+
     private String picture;
 
     @ManyToOne

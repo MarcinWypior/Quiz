@@ -50,7 +50,6 @@ public class UserController {
         modelMap.addAttribute("email", email);
         modelMap.addAttribute("file", file);
 
-
         Path path1 = Paths.get("/home/marcin/CL/QUIZ/src/main/resources/uploadedFiles",file.getOriginalFilename());
 
         try {
@@ -62,8 +61,6 @@ public class UserController {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-
 
 
         return "fileUpload";
@@ -120,11 +117,33 @@ public class UserController {
     }
 
     @PostMapping("/formQuestion")
-    public String questionForm(@Valid @ModelAttribute Question question, BindingResult bindingResult) {
+    public String questionForm(@Valid @ModelAttribute("question") Question question,
+                               BindingResult bindingResult,
+                               @RequestParam MultipartFile file,
+                               ModelMap modelMap) {
         if (bindingResult.hasErrors()) {
             return "questionForm";
         }
 
+
+        modelMap.addAttribute("file", file);
+
+        String [] elemnts=file.getName().split("\\.");
+
+        Path path1 = Paths.get("src/main/resources/static/uploadedFiles"+question.getId()+"."+elemnts[elemnts.length-1]);
+
+        try {
+            InputStream inputStream = new ByteArrayInputStream(file.getBytes());
+            Files.copy(
+                    inputStream,
+                    path1,
+                    StandardCopyOption.REPLACE_EXISTING);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+                question.setPicture(path1.toString());
         questionRepository.save(question);
 
         return "redirect:/questionList";
@@ -132,7 +151,7 @@ public class UserController {
 
     @GetMapping("/formQuestion/{id}")
     public String getQuestionForm(Model model, @PathVariable long id) {
-        model.addAttribute("question", questionRepository.findById(id));
+        model.addAttribute("question", questionRepository.getOne(id));
         return "questionForm";
     }
 
