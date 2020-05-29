@@ -4,10 +4,13 @@ package coderslab.quiz.controllers;
 import coderslab.quiz.entities.Answer;
 import coderslab.quiz.entities.Category;
 import coderslab.quiz.entities.Question;
+import coderslab.quiz.fixture.InitDataFixture;
 import coderslab.quiz.repositories.AnswerRepository;
 import coderslab.quiz.repositories.CategoryRepository;
 import coderslab.quiz.repositories.QuestionRepository;
 import coderslab.quiz.repositories.UserRepository;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -34,11 +37,39 @@ public class UserController {
     private QuestionRepository questionRepository;
     private AnswerRepository answerRepository;
 
-    public UserController(UserRepository userRepository,CategoryRepository categoryRepository,QuestionRepository questionRepository,AnswerRepository answerRepository) {
+    private final InitDataFixture initDataFixture;
+
+    public UserController(UserRepository userRepository, CategoryRepository categoryRepository, QuestionRepository questionRepository, AnswerRepository answerRepository, InitDataFixture initDataFixture) {
+        InitDataFixture initDataFixture1;
         this.userRepository = userRepository;
         this.categoryRepository= categoryRepository;
         this.questionRepository =questionRepository;
         this.answerRepository = answerRepository;
+        this.initDataFixture = initDataFixture;
+    }
+
+
+
+    @GetMapping("/admin")
+    @ResponseBody
+    public String admin(
+            @AuthenticationPrincipal UserDetails customUser
+    ) {
+        return "You are logged as " + customUser;
+    }
+
+    @GetMapping("/about")
+    public String about() {
+        return "user/panel";
+    }
+
+    @GetMapping("/initData")
+    @ResponseBody
+    public String createUser() {
+
+        this.initDataFixture.initRoles();
+        this.initDataFixture.initUsers();
+        return "initialized";
     }
 
 
