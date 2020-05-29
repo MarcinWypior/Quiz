@@ -1,10 +1,11 @@
 package coderslab.quiz.service;
 
+import coderslab.quiz.entities.Role;
+import coderslab.quiz.interfaces.RoleService;
+import coderslab.quiz.repositories.RoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import pl.coderslab.examplesecurity.entity.Role;
-import pl.coderslab.examplesecurity.interfaces.RoleService;
-import pl.coderslab.examplesecurity.repository.RoleRepository;
+
 
 @Service
 public class RoleServiceImpl implements RoleService {

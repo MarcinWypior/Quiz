@@ -1,18 +1,17 @@
 package coderslab.quiz.service;
 
+import coderslab.quiz.Model.CurrentUser;
+import coderslab.quiz.entities.Role;
+import coderslab.quiz.entities.User;
+import coderslab.quiz.interfaces.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import pl.coderslab.examplesecurity.Model.CurrentUser;
-import pl.coderslab.examplesecurity.entity.Role;
-import pl.coderslab.examplesecurity.entity.User;
-import pl.coderslab.examplesecurity.interfaces.UserService;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 public class SpringDataUserDetailsService implements UserDetailsService {
@@ -36,6 +35,6 @@ public class SpringDataUserDetailsService implements UserDetailsService {
 //                user.getUsername(), user.getPassword(), grantedAuthorities);
 
 //        Change to own implementation
-        return new CurrentUser(user.getUsername(), user.getPassword(), grantedAuthorities, user);
+        return new CurrentUser(user.getNickName(), user.getPassword(), grantedAuthorities, user);
     }
 }

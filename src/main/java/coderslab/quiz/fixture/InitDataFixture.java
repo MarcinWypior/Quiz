@@ -1,15 +1,14 @@
 package coderslab.quiz.fixture;
 
 
+import coderslab.quiz.entities.Role;
+import coderslab.quiz.entities.User;
+import coderslab.quiz.interfaces.RoleService;
+import coderslab.quiz.interfaces.UserService;
 import org.springframework.stereotype.Service;
-import pl.coderslab.examplesecurity.entity.Role;
-import pl.coderslab.examplesecurity.entity.User;
-import pl.coderslab.examplesecurity.interfaces.RoleService;
-import pl.coderslab.examplesecurity.interfaces.UserService;
-import pl.coderslab.examplesecurity.repository.RoleRepository;
-import pl.coderslab.examplesecurity.repository.UserRepository;
 
-import java.util.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Service
 public class InitDataFixture {
@@ -38,7 +37,7 @@ public class InitDataFixture {
         adminRoles.add(roleService.findOneByName("ROLE_ADMIN"));
 
         User admin = new User();
-        admin.setUsername("admin");
+        admin.setNickName("admin");
         admin.setPassword("admin");
         admin.setRoles(adminRoles);
         userService.saveUser(admin);
@@ -47,7 +46,7 @@ public class InitDataFixture {
         userRoles.add(roleService.findOneByName("ROLE_USER"));
 
         User user = new User();
-        user.setUsername("user");
+        user.setNickName("user");
         user.setPassword("user");
         user.setRoles(userRoles);
 

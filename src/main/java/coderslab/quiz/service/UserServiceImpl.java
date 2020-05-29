@@ -1,14 +1,13 @@
 package coderslab.quiz.service;
 
+import coderslab.quiz.entities.Role;
+import coderslab.quiz.entities.User;
+import coderslab.quiz.interfaces.UserService;
+import coderslab.quiz.repositories.RoleRepository;
+import coderslab.quiz.repositories.UserRepository;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import pl.coderslab.examplesecurity.entity.Role;
-import pl.coderslab.examplesecurity.entity.User;
-import pl.coderslab.examplesecurity.interfaces.UserService;
-import pl.coderslab.examplesecurity.repository.RoleRepository;
-import pl.coderslab.examplesecurity.repository.UserRepository;
 
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 

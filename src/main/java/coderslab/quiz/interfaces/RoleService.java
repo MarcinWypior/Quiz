@@ -1,6 +1,6 @@
 package coderslab.quiz.interfaces;
 
-import pl.coderslab.examplesecurity.entity.Role;
+import coderslab.quiz.entities.Role;
 
 public interface RoleService {
     void save(Role role);

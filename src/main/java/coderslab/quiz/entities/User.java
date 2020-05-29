@@ -24,7 +24,9 @@ public class User {
     @Email
     private String email;
 
-    private int isEnabled;
+    private int enabled;
+
+    private String password;
 
 
 
@@ -60,16 +62,32 @@ public class User {
                 "id=" + id +
                 ", nickName='" + nickName + '\'' +
                 ", email='" + email + '\'' +
-                ", isEnabled=" + isEnabled +
+                ", enabled=" + enabled +
                 '}';
     }
 
-    public void setIsEnabled(int isEnabled) {
-        this.isEnabled = isEnabled;
+    public void setEnabled(int enabled) {
+        this.enabled = enabled;
     }
 
-    public int getIsEnabled() {
-        return isEnabled;
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
+    }
+
+    public int getEnabled() {
+        return enabled;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public Set<Role> getRoles() {
+        return roles;
     }
 
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
