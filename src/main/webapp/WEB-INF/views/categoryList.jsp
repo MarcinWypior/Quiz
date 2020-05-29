@@ -23,6 +23,9 @@
             <td>
                 <a href="/formCategory/${cat.id}">Edytuj</a>
             </td>
+            <td>
+                <a href="/deleteCategory/${cat.id}">usuń</a>
+            </td>
         </tr>
     </c:forEach>
 </table>

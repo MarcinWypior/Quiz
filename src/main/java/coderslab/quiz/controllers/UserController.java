@@ -88,6 +88,13 @@ public class UserController {
         return "redirect:/categoryList";
     }
 
+    @GetMapping("/deleteCategory/{id}")
+    public String deleteCategories(Model model, @PathVariable long id){
+        model.addAttribute("category",categoryRepository.findAll());
+        categoryRepository.deleteById(id);
+        return "redirect:/categoryList";
+    }
+
     @GetMapping("/categoryList")
     public String categoriesList(Model model){
         model.addAttribute("category",categoryRepository.findAll());
