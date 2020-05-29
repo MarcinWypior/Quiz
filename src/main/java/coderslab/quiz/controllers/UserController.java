@@ -36,36 +36,6 @@ public class UserController {
     }
 
 
-    @GetMapping("/upload")
-    public String uploadFile(){
-        return "fileUpload";
-    }
-
-    @PostMapping("/uploadFileWithAddtionalData")
-    public String submit(
-            @RequestParam MultipartFile file, @RequestParam String name,
-            @RequestParam String email, ModelMap modelMap) {
-
-        modelMap.addAttribute("name", name);
-        modelMap.addAttribute("email", email);
-        modelMap.addAttribute("file", file);
-
-        Path path1 = Paths.get("/home/marcin/CL/QUIZ/src/main/resources/uploadedFiles",file.getOriginalFilename());
-
-        try {
-            InputStream inputStream = new ByteArrayInputStream(file.getBytes());
-            Files.copy(
-                    inputStream,
-                    path1,
-                    StandardCopyOption.REPLACE_EXISTING);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-
-        return "fileUpload";
-    }
-
     @GetMapping("/home")
     public String home(){
         //model.addAttribute("username","Użytkownik");
