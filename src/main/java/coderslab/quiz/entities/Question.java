@@ -16,7 +16,7 @@ public class Question {
     @ManyToOne
     Category category;
 
-    @OneToMany
+    @OneToMany(mappedBy = "question",cascade = CascadeType.REMOVE)
     List<Answer> answerList;
 
     @Override
