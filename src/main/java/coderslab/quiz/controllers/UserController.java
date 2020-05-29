@@ -138,7 +138,14 @@ public class UserController {
     @GetMapping("/formQuestion/{id}")
     public String getQuestionForm(Model model, @PathVariable long id) {
         model.addAttribute("question", questionRepository.getOne(id));
+        model.addAttribute("category",categoryRepository.findAll());
         return "questionForm";
+    }
+
+    @GetMapping("/deleteQuestion/{id}")
+    public String deleteQuestionForm(Model model, @PathVariable long id) {
+        questionRepository.delete(questionRepository.findById(id).get());
+        return "redirect:/questionList";
     }
 
 

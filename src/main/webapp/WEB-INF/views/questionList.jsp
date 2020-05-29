@@ -23,6 +23,9 @@
             <td>
                 <a href="/formQuestion/${question.id}">Edytuj</a>
             </td>
+            <td>
+                <a href="/deleteQuestion/${question.id}">usuń</a>
+            </td>
         </tr>
     </c:forEach>
 </table>
