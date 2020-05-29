@@ -93,12 +93,13 @@ public class UserController {
             return "categoryForm";
         }
 
-        boolean exists = categoryRepository.findAll().stream().anyMatch(e -> e.getCategoryName() == category.getCategoryName());
-        if(!exists) {
-            categoryRepository.save(category);
-        }else {
-            bindingResult.addError( new ObjectError("category","taka kategoria już istnieje") );
+        boolean anyMatch = categoryRepository.findAll().stream().anyMatch(e -> e.getCategoryName().equalsIgnoreCase(category.getCategoryName()));
+
+        if(anyMatch) {
+            bindingResult.addError( new ObjectError("categoryName","taka kategoria już istnieje") );
             return "categoryForm";
+        }else {
+            categoryRepository.save(category);
         }
         return "redirect:/categoryList";
     }
