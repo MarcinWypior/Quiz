@@ -12,6 +12,13 @@
     <title>strona glowna</title>
 </head>
 <body>
-home page
+<a href="questionList.jsp">Lista pytań</a>
+<br>
+<a href="/formQuestion">dodaj własne pytanie</a>
+<br>
+<a href="categoryList.jsp">Lista kategorii</a>
+<br>
+<a href="/formCategory">dodaj kategorie</a>
+<br>
 </body>
 </html>

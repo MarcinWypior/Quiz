@@ -151,6 +151,7 @@ public class UserController {
     public String getQuestionForm(Model model, @PathVariable long id) {
         model.addAttribute("question", questionRepository.getOne(id));
         model.addAttribute("category",categoryRepository.findAll());
+        model.addAttribute("answers",answerRepository.findByQuestion(questionRepository.getOne(id)));
         return "questionForm";
     }
 
@@ -176,7 +177,6 @@ public class UserController {
         model.addAttribute("question",questionRepository.findById(id).get());
         return "answerForm";
     }
-
 
 
     @PostMapping("/formAnswer/{question_id}")

@@ -53,10 +53,8 @@
 
     <c:if test="${not empty question.id}">
         <a href="/formAnswer/${question.id}">dodaj odpowiedz</a>
-    </c:if>
-
+    </c:if>                                                                                                                 
         <br>
-
     <c:if test="${not empty question.picture}">
         <img src="${question.picture}">
     </c:if>

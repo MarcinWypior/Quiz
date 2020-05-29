@@ -15,10 +15,11 @@
 <table>
     <tr>
         <th>Nazwa kategorii</th>
-        <th>Akcje</th>
+        <th>o co pytamy ?</th>
     </tr>
     <c:forEach items="${questions}" var="question">
         <tr>
+            <td>${question.category.categoryName}</td>
             <td>${question.query}</td>
             <td>
                 <a href="/formQuestion/${question.id}">Edytuj</a>
@@ -30,5 +31,10 @@
     </c:forEach>
 </table>
 <a href="/formQuestion">Dodaj</a>
+<br>
+<a href="/home">Strona glowna</a>
+<br>
+<a href="categoryList.jsp">Lista kategorii</a>
+<br>
 </body>
 </html>
