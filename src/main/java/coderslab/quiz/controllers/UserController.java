@@ -1,8 +1,10 @@
 package coderslab.quiz.controllers;
 
 
+import coderslab.quiz.entities.Answer;
 import coderslab.quiz.entities.Category;
 import coderslab.quiz.entities.Question;
+import coderslab.quiz.repositories.AnswerRepository;
 import coderslab.quiz.repositories.CategoryRepository;
 import coderslab.quiz.repositories.QuestionRepository;
 import coderslab.quiz.repositories.UserRepository;
@@ -30,11 +32,13 @@ public class UserController {
     private UserRepository userRepository;
     private CategoryRepository categoryRepository;
     private QuestionRepository questionRepository;
+    private AnswerRepository answerRepository;
 
-    public UserController(UserRepository userRepository,CategoryRepository categoryRepository,QuestionRepository questionRepository) {
+    public UserController(UserRepository userRepository,CategoryRepository categoryRepository,QuestionRepository questionRepository,AnswerRepository answerRepository) {
         this.userRepository = userRepository;
         this.categoryRepository= categoryRepository;
         this.questionRepository =questionRepository;
+        this.answerRepository = answerRepository;
     }
 
 
@@ -44,6 +48,7 @@ public class UserController {
         return "home";
     }
 
+    //kategoria
     @GetMapping("/formCategory")
     public String getForm(Model model) {
         model.addAttribute("category", new Category());
@@ -161,6 +166,46 @@ public class UserController {
         model.addAttribute("questions",questionRepository.findAll());
         model.addAttribute("category",categoryRepository.findAll());
         return "questionList";
+    }
+
+    //odpowiedz
+
+    @GetMapping("/formAnswer/{id}")
+    public String answerForm(Model model, @PathVariable Long id) {
+        model.addAttribute("answer", new Answer());
+        model.addAttribute("question",questionRepository.findById(id).get());
+        return "answerForm";
+    }
+
+
+
+    @PostMapping("/formAnswer/{question_id}")
+    public String postAnswerForm(@Valid @ModelAttribute Answer answer, BindingResult bindingResult,@PathVariable long question_id,Model model) {
+        if (bindingResult.hasErrors())   {
+            return "answerForm";
+        }
+
+        Question question = questionRepository.findById(question_id).get();
+        answer.setQuestion(question);
+        answerRepository.save(answer);
+
+        model.addAttribute("question",question);
+        model.addAttribute("category",categoryRepository.findAll());
+        model.addAttribute("answers",answerRepository.findByQuestion(question));
+        return "questionForm";
+    }
+
+    @GetMapping("/deleteAnswer/{id}")
+    public String deleteAnswer(Model model, @PathVariable long id){
+
+        Answer firstById = answerRepository.findFirstById(id);
+        Question question = firstById.getQuestion();
+        answerRepository.delete(firstById);
+
+        model.addAttribute("question",question);
+        model.addAttribute("category",categoryRepository.findAll());
+        model.addAttribute("answers",answerRepository.findByQuestion(question));
+        return "questionForm";
     }
 
 }

@@ -27,10 +27,31 @@
     </div>
 
     <div>
-        załącz obrazek
+        <c:if test="${not empty question.picture}">
+            zmień obrazek
+        </c:if>
+
+        <c:if test="${empty question.picture}">
+            załącz obrazek
+        </c:if>
+
         <input type="file" name="file" />
     </div>
 
+
+    <c:forEach items="${answers}" var="answer">
+        <tr>
+            <td>${answer.text}</td>
+            <td>
+                <a href="/deleteAnswer/${answer.id}">x</a>
+                &nbsp;
+                &nbsp;
+            </td>
+        </tr>
+    </c:forEach>
+
+    <a href="/formAnswer/${question.id}">dodaj odpowiedz</a>
+        <br>
 
     <c:if test="${not empty question.picture}">
         <img src="${question.picture}">
