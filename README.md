@@ -1,1 +1,1 @@
-#Projekt koncoy - quiz
+#Projekt koncowy - quiz
