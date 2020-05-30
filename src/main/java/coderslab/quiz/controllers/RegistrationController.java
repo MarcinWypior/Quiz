@@ -43,7 +43,7 @@ public class RegistrationController {
         boolean emailOccupied = userRepository.findAll().stream().anyMatch(e -> (e.getEmail().equals(user.getEmail())));
 
         if (emailOccupied) {
-            bindingResult.addError(new FieldError("User","email","email jest zajety"));
+            bindingResult.addError(new FieldError("User","email","email jest  zajety"));
             model.addAttribute("user",user);
         }
         if(nameOccupied) {
