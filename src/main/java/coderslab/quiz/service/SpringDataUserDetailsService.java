@@ -35,6 +35,6 @@ public class SpringDataUserDetailsService implements UserDetailsService {
 //                user.getUsername(), user.getPassword(), grantedAuthorities);
 
 //        Change to own implementation
-        return new CurrentUser(user.getNickName(), user.getPassword(), grantedAuthorities, user);
+        return new CurrentUser(user.getUsername(), user.getPassword(), grantedAuthorities, user);
     }
 }

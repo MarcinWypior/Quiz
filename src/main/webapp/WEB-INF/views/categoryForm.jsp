@@ -15,9 +15,9 @@ Dodaj nową kategorie
     <input type="submit"/>
 </form:form>
 
-<a href="questionList.jsp">Lista pytań</a>
+<a href="questionList">Lista pytań</a>
 <br>
-<a href="categoryList.jsp">Lista kategorii</a>
+<a href="categoryList">Lista kategorii</a>
 <br>
 </body>
 </html>

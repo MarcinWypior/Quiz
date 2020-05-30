@@ -6,7 +6,6 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
 import java.util.Set;
 
 @Entity
@@ -18,9 +17,9 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(nullable = false, unique = true, length = 60)
-    private String nickName;
-    @NotBlank
-    @Column(unique = true)
+    private String username;
+//    @NotEmpty
+//    @Column(unique = true)
     @Email
     private String email;
 
@@ -34,9 +33,7 @@ public class User {
         this.id = id;
     }
 
-    public void setNickName(String nickName) {
-        this.nickName = nickName;
-    }
+
 
     public void setEmail(String email) {
         this.email = email;
@@ -48,9 +45,6 @@ public class User {
         return id;
     }
 
-    public String getNickName() {
-        return nickName;
-    }
 
     public String getEmail() {
         return email;
@@ -60,10 +54,18 @@ public class User {
     public String toString() {
         return "User{" +
                 "id=" + id +
-                ", nickName='" + nickName + '\'' +
+                ", nickName='" + username + '\'' +
                 ", email='" + email + '\'' +
                 ", enabled=" + enabled +
                 '}';
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public void setEnabled(int enabled) {
