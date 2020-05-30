@@ -181,7 +181,6 @@ public class GuestController {
         return "answerForm";
     }
 
-
     @PostMapping("/formAnswer/{question_id}")
     public String postAnswerForm(@Valid @ModelAttribute Answer answer, BindingResult bindingResult, @PathVariable long question_id, Model model) {
         if (bindingResult.hasErrors()) {

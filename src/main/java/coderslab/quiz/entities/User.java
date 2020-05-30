@@ -6,6 +6,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
+import javax.validation.constraints.Size;
 import java.util.Set;
 
 @Entity
@@ -16,10 +17,10 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Size(min = 4,max=8)
     @Column(nullable = false, unique = true, length = 60)
     private String username;
-//    @NotEmpty
-//    @Column(unique = true)
+    @Column(unique = true)
     @Email
     private String email;
 
