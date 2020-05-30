@@ -116,7 +116,7 @@ public class GuestController {
     public String questionForm(@Valid @ModelAttribute("question") Question question,
                                BindingResult bindingResult,
                                @RequestParam MultipartFile file,
-                               ModelMap modelMap) {
+                               ModelMap modelMap,Model model) {
         if (bindingResult.hasErrors()) {
             return "questionForm";
         }
@@ -138,12 +138,16 @@ public class GuestController {
             e.printStackTrace();
         }
 
+
+
+
         question.setPicture(path1.toString());
         questionRepository.save(question);
 
+        model.addAttribute("category", categoryRepository.findAll());
+        model.addAttribute("answers", answerRepository.findByQuestion(questionRepository.getOne(question.getId())));
 
-
-        return "redirect:/questionList";
+        return "questionForm";
     }
 
     @GetMapping("/formQuestion/{id}")
