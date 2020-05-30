@@ -34,7 +34,7 @@
 <br>
 <a href="/home">Strona glowna</a>
 <br>
-<a href="categoryList.jsp">Lista kategorii</a>
+<a href="categoryList">Lista kategorii</a>
 <br>
 </body>
 </html>

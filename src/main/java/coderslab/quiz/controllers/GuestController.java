@@ -141,6 +141,8 @@ public class GuestController {
         question.setPicture(path1.toString());
         questionRepository.save(question);
 
+
+
         return "redirect:/questionList";
     }
 
