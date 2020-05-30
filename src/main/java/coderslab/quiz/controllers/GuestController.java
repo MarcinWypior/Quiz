@@ -80,9 +80,6 @@ public class GuestController {
                     "jest już taka kategoria"
             );
             bindingResult.addError(notUniqueCategoryName);
-
-
-            bindingResult.addError(notUniqueCategoryName);
             return "categoryForm";
         } else {
             categoryRepository.save(category);

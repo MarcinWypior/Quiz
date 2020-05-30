@@ -8,7 +8,7 @@
     </title>
 </head>
 <body>
-<form:form method="post" modelAttribute="user" action="/registration/">
+<form:form method="post" modelAttribute="user" action="/registration">
     <form:hidden path="id" />
     <div>
         <label> <form:input path="username" placeholder="nazwa urzytkownika"/></label>

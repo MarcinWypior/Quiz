@@ -8,9 +8,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -38,7 +37,19 @@ public class RegistrationController {
     }
 
     @PostMapping("/registration")
-    public String questionForm(@Valid @ModelAttribute User user, BindingResult bindingResult,Model model) {
+    public String questionForm(@Valid @ModelAttribute User user, BindingResult bindingResult, Model model) {
+
+        boolean nameOccupied = userRepository.findAll().stream().anyMatch(e -> (e.getUsername().equals(user.getUsername())));
+        boolean emailOccupied = userRepository.findAll().stream().anyMatch(e -> (e.getEmail().equals(user.getEmail())));
+
+        if (emailOccupied) {
+            bindingResult.addError(new FieldError("User","email","email jest zajety"));
+            model.addAttribute("user",user);
+        }
+        if(nameOccupied) {
+            bindingResult.addError(new FieldError("User","username","nazwa urzytkownika jest zajeta"));
+            model.addAttribute("user",user);
+        }
         if (bindingResult.hasErrors()) {
             return "registrationForm";
         }
@@ -47,7 +58,10 @@ public class RegistrationController {
                 roleRepository,
                 passwordEncoder);
 
-        userSerImp.saveUser(user);
+        userRepository.findByUsername(user.getUsername());
+        //TODO
+
+            userSerImp.saveUser(user);
 
         return "home";
     }

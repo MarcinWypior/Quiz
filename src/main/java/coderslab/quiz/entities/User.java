@@ -6,6 +6,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 import java.util.Set;
 
@@ -17,36 +18,26 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Size(min = 4,max=8)
-    @Column(nullable = false, unique = true, length = 60)
+    @Size(min = 4,max=15)
+    @Column(unique = true)
     private String username;
     @Column(unique = true)
     @Email
+    @NotEmpty
     private String email;
-
     private int enabled;
-
     private String password;
-
 
 
     public void setId(Long id) {
         this.id = id;
     }
-
-
-
     public void setEmail(String email) {
         this.email = email;
     }
-
-
-
     public Long getId() {
         return id;
     }
-
-
     public String getEmail() {
         return email;
     }
