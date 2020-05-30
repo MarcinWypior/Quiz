@@ -59,11 +59,9 @@ public class RegistrationController {
                 passwordEncoder);
 
         userRepository.findByUsername(user.getUsername());
-        //TODO
 
             userSerImp.saveUser(user);
 
         return "home";
     }
-
 }

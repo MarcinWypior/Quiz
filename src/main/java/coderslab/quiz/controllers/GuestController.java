@@ -69,17 +69,7 @@ public class GuestController {
         boolean anyMatch = categoryRepository.findAll().stream().anyMatch(e -> e.getCategoryName().equalsIgnoreCase(category.getCategoryName()));
 
         if (anyMatch) {
-
-            FieldError notUniqueCategoryName = new FieldError(
-                    "category",
-                    category.getCategoryName(),
-                    " ",
-                    true,
-                    new String[]{"jest już w użyciu"},
-                    new Object[]{},
-                    "jest już taka kategoria"
-            );
-            bindingResult.addError(notUniqueCategoryName);
+            bindingResult.addError(new FieldError("Category","categoryName","taka kategoria już istnieje"));
             return "categoryForm";
         } else {
             categoryRepository.save(category);
@@ -114,6 +104,8 @@ public class GuestController {
                                BindingResult bindingResult,
                                @RequestParam MultipartFile file,
                                ModelMap modelMap,Model model) {
+        //
+        //bindingResult.addError(new FieldError("User","email","email jest zajety"));
         if (bindingResult.hasErrors()) {
             return "questionForm";
         }
@@ -168,7 +160,6 @@ public class GuestController {
         model.addAttribute("category", categoryRepository.findAll());
         return "questionList";
     }
-
     //odpowiedz
 
     @GetMapping("/formAnswer/{id}")
