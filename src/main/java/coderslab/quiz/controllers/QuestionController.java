@@ -37,13 +37,7 @@ public class QuestionController {
 
     public QuestionController(QuestionService questionService,
                               CategoryService categoryService,
-                              AnswerService answerService,
-                              CategoryRepository categoryRepository,
-                              QuestionRepository questionRepository,
-                              AnswerRepository answerRepository) {
-        this.categoryRepository = categoryRepository;
-        this.questionRepository = questionRepository;
-        this.answerRepository = answerRepository;
+                              AnswerService answerService) {
         this.questionService = questionService;
         this.categoryService = categoryService;
         this.answerService = answerService;

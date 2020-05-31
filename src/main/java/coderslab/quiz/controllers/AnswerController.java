@@ -5,9 +5,7 @@ import coderslab.quiz.entities.Answer;
 import coderslab.quiz.entities.Question;
 import coderslab.quiz.interfaces.AnswerService;
 import coderslab.quiz.interfaces.CategoryService;
-import coderslab.quiz.repositories.AnswerRepository;
-import coderslab.quiz.repositories.CategoryRepository;
-import coderslab.quiz.repositories.QuestionRepository;
+import coderslab.quiz.interfaces.QuestionService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -22,23 +20,14 @@ import javax.validation.Valid;
 @Controller
 public class AnswerController {
 
-    private CategoryRepository categoryRepository;
-    private QuestionRepository questionRepository;
-    private AnswerRepository answerRepository;
-
     private AnswerService answerService;
     private CategoryService categoryService;
+    private QuestionService questionService;
 
-    public AnswerController(CategoryRepository categoryRepository,
-                            QuestionRepository questionRepository,
-                            AnswerRepository answerRepository,
-                            AnswerService answerService,
-                            CategoryService categoryService)
+
+    public AnswerController(AnswerService answerService, CategoryService categoryService,QuestionService questionService)
     {
-        this.categoryRepository = categoryRepository;
-        this.questionRepository = questionRepository;
-        this.answerRepository = answerRepository;
-
+        this.questionService = questionService;
         this.answerService = answerService;
         this.categoryService = categoryService;
     }
@@ -47,7 +36,7 @@ public class AnswerController {
     @GetMapping("/formAnswer/{id}")
     public String answerForm(Model model, @PathVariable Long id) {
         model.addAttribute("answer", new Answer());
-        model.addAttribute("question", questionRepository.findById(id).get());
+        model.addAttribute("question", questionService.findById(id));
         return "answerForm";
     }
 
@@ -61,7 +50,7 @@ public class AnswerController {
             return "answerForm";
         }
 
-        Question question = questionRepository.findById(question_id).get();
+        Question question = questionService.findById(question_id);
         answer.setQuestion(question);
         answerService.save(answer);
 
