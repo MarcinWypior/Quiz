@@ -2,6 +2,7 @@ package coderslab.quiz.entities;
 
 
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 import java.util.List;
 
 @Entity
@@ -9,6 +10,7 @@ public class Question {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Size(min = 10,max = 60)
     private String query;
     private boolean isOpenAnswer;
     private String picture;
