@@ -27,8 +27,9 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     @Override
-    public List<Question> findAllinCategory(String categoryName) {
-        return null;
+    public List<Question> findAllinCategory(String categoryName)
+    {
+        return questionRepository.findAllByCategoryCategoryName(categoryName);
     }
 
     @Override
@@ -46,12 +47,12 @@ public class QuestionServiceImpl implements QuestionService {
 
     @Override
     public void save(Question question) {
-
+        questionRepository.save(question);
     }
 
     @Override
     public void delete(Long id) {
-
+        questionRepository.deleteById(id);
     }
 
     @Override

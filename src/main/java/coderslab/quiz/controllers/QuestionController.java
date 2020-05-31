@@ -1,6 +1,8 @@
 package coderslab.quiz.controllers;
 
 import coderslab.quiz.entities.Question;
+import coderslab.quiz.interfaces.AnswerService;
+import coderslab.quiz.interfaces.CategoryService;
 import coderslab.quiz.interfaces.QuestionService;
 import coderslab.quiz.repositories.AnswerRepository;
 import coderslab.quiz.repositories.CategoryRepository;
@@ -9,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -29,18 +32,27 @@ public class QuestionController {
     private QuestionRepository questionRepository;
     private AnswerRepository answerRepository;
     private QuestionService questionService;
+    private CategoryService categoryService;
+    private AnswerService answerService;
 
-    public QuestionController(QuestionService questionService,CategoryRepository categoryRepository, QuestionRepository questionRepository, AnswerRepository answerRepository) {
+    public QuestionController(QuestionService questionService,
+                              CategoryService categoryService,
+                              AnswerService answerService,
+                              CategoryRepository categoryRepository,
+                              QuestionRepository questionRepository,
+                              AnswerRepository answerRepository) {
         this.categoryRepository = categoryRepository;
         this.questionRepository = questionRepository;
         this.answerRepository = answerRepository;
         this.questionService = questionService;
+        this.categoryService = categoryService;
+        this.answerService = answerService;
     }
 
     @GetMapping("/formQuestion")
     public String formQuestion(Model model) {
         model.addAttribute("question", new Question());
-        model.addAttribute("category", questionService.findAll());
+        model.addAttribute("category", categoryService.findAll());
         return "questionForm";
     }
 
@@ -50,7 +62,8 @@ public class QuestionController {
                                @RequestParam MultipartFile file,
                                ModelMap modelMap, Model model) {
         //TODO
-        //bindingResult.addError(new FieldError("User","email","email jest zajety"));
+        if(questionService.doesQuestionExist(question.getQuery()))
+        bindingResult.addError(new FieldError("Question","query","takie pytanie już istnieje"));
         if (bindingResult.hasErrors()) {
             return "questionForm";
         }
@@ -70,32 +83,32 @@ public class QuestionController {
         }
 
         question.setPicture(path1.toString());
-        questionRepository.save(question);
+        questionService.save(question);
 
-        model.addAttribute("category", categoryRepository.findAll());
-        model.addAttribute("answers", answerRepository.findByQuestion(questionRepository.getOne(question.getId())));
+        model.addAttribute("category", categoryService.findAll());
+        model.addAttribute("answers", answerService.findByQuestion(questionService.findById(question.getId())));
 
         return "questionForm";
     }
 
     @GetMapping("/formQuestion/{id}")
     public String getQuestionForm(Model model, @PathVariable long id) {
-        model.addAttribute("question", questionRepository.getOne(id));
-        model.addAttribute("category", categoryRepository.findAll());
-        model.addAttribute("answers", answerRepository.findByQuestion(questionRepository.getOne(id)));
+        model.addAttribute("question", questionService.findById(id));
+        model.addAttribute("category", categoryService.findAll());
+        model.addAttribute("answers", answerService.findByQuestion(questionService.findById(id)));
         return "questionForm";
     }
 
     @GetMapping("/deleteQuestion/{id}")
     public String deleteQuestionForm(Model model, @PathVariable long id) {
-        questionRepository.delete(questionRepository.findById(id).get());
+        questionService.delete(id);
+        //questionRepository.delete(questionRepository.findById(id).get());
         return "redirect:/questionList";
     }
 
     @GetMapping("/questionList")
     public String questionList(Model model) {
-        model.addAttribute("questions", questionRepository.findAll());
-        model.addAttribute("category", categoryRepository.findAll());
+        model.addAttribute("questions", questionService.findAll());
         return "questionList";
     }
 }
