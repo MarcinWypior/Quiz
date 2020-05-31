@@ -22,7 +22,6 @@ public class CategoryController {
         this.categoryService=categoryService;
     }
 
-    //kategoria
     @GetMapping("/formCategory")
     public String getForm(Model model) {
         model.addAttribute("category", new Category());
@@ -37,7 +36,6 @@ public class CategoryController {
 
     @PostMapping("/formCategory")
     public String postForm(@Valid @ModelAttribute Category category, BindingResult bindingResult) {
-        //boolean anyMatch = categoryRepository.findAll().stream().anyMatch(e -> e.getCategoryName().equalsIgnoreCase(category.getCategoryName()));
 
         if (categoryService.doesCategoryExist(category.getCategoryName())) {
             bindingResult.addError(new FieldError("Category","categoryName","taka kategoria już istnieje"));

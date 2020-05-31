@@ -3,12 +3,15 @@ package coderslab.quiz.controllers;
 
 import coderslab.quiz.entities.Answer;
 import coderslab.quiz.entities.Question;
+import coderslab.quiz.interfaces.AnswerService;
+import coderslab.quiz.interfaces.CategoryService;
 import coderslab.quiz.repositories.AnswerRepository;
 import coderslab.quiz.repositories.CategoryRepository;
 import coderslab.quiz.repositories.QuestionRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,10 +26,21 @@ public class AnswerController {
     private QuestionRepository questionRepository;
     private AnswerRepository answerRepository;
 
-    public AnswerController(CategoryRepository categoryRepository, QuestionRepository questionRepository, AnswerRepository answerRepository) {
+    private AnswerService answerService;
+    private CategoryService categoryService;
+
+    public AnswerController(CategoryRepository categoryRepository,
+                            QuestionRepository questionRepository,
+                            AnswerRepository answerRepository,
+                            AnswerService answerService,
+                            CategoryService categoryService)
+    {
         this.categoryRepository = categoryRepository;
         this.questionRepository = questionRepository;
         this.answerRepository = answerRepository;
+
+        this.answerService = answerService;
+        this.categoryService = categoryService;
     }
 
 
@@ -39,31 +53,35 @@ public class AnswerController {
 
     @PostMapping("/formAnswer/{question_id}")
     public String postAnswerForm(@Valid @ModelAttribute Answer answer, BindingResult bindingResult, @PathVariable long question_id, Model model) {
+
+        if(answerService.findByText(answer.getText())!=null)
+            bindingResult.addError(new FieldError("Answer","text","taka odpowiedz już istnieje"));
+
         if (bindingResult.hasErrors()) {
             return "answerForm";
         }
 
         Question question = questionRepository.findById(question_id).get();
         answer.setQuestion(question);
-        answerRepository.save(answer);
+        answerService.save(answer);
 
         model.addAttribute("question", question);
-        model.addAttribute("category", categoryRepository.findAll());
-        model.addAttribute("answers", answerRepository.findByQuestion(question));
+        model.addAttribute("category", categoryService.findAll());
+        model.addAttribute("answers", answerService.findByQuestion(question));
         return "questionForm";
     }
 
     @GetMapping("/deleteAnswer/{id}")
     public String deleteAnswer(Model model, @PathVariable long id) {
 
-        Answer firstById = answerRepository.findFirstById(id);
-        Question question = firstById.getQuestion();
-        answerRepository.delete(firstById);
-
-        model.addAttribute("question", question);
-        model.addAttribute("category", categoryRepository.findAll());
-        model.addAttribute("answers", answerRepository.findByQuestion(question));
+//        answerService.delete(id);
+//        Answer firstById = answerService.findByID(id);
+//        answerRepository.delete(firstById);
+        Question question = answerService.findByID(id).getQuestion();
+        answerService.delete(id);
+        model.addAttribute("question",question);
+        model.addAttribute("category", categoryService.findAll());
+        model.addAttribute("answers", answerService.findByQuestion(question));
         return "questionForm";
     }
-
 }
