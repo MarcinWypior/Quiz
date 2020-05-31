@@ -2,7 +2,7 @@ package coderslab.quiz.controllers;
 
 
 import coderslab.quiz.entities.Category;
-import coderslab.quiz.repositories.CategoryRepository;
+import coderslab.quiz.interfaces.CategoryService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -16,12 +16,10 @@ import javax.validation.Valid;
 
 @Controller
 public class CategoryController {
-    private CategoryRepository categoryRepository;
+    private CategoryService categoryService;
 
-
-
-    public CategoryController(CategoryRepository categoryRepository) {
-        this.categoryRepository=categoryRepository;
+    public CategoryController(CategoryService categoryService) {
+        this.categoryService=categoryService;
     }
 
     //kategoria
@@ -33,37 +31,33 @@ public class CategoryController {
 
     @GetMapping("/formCategory/{id}")
     public String getForm(Model model, @PathVariable long id) {
-        model.addAttribute("category", categoryRepository.findFirstById(id));
+        model.addAttribute("category", categoryService.findById(id));
         return "categoryForm";
     }
 
     @PostMapping("/formCategory")
     public String postForm(@Valid @ModelAttribute Category category, BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) {
-            return "categoryForm";
-        }
+        //boolean anyMatch = categoryRepository.findAll().stream().anyMatch(e -> e.getCategoryName().equalsIgnoreCase(category.getCategoryName()));
 
-        boolean anyMatch = categoryRepository.findAll().stream().anyMatch(e -> e.getCategoryName().equalsIgnoreCase(category.getCategoryName()));
-
-        if (anyMatch) {
+        if (categoryService.doesCategoryExist(category.getCategoryName())) {
             bindingResult.addError(new FieldError("Category","categoryName","taka kategoria już istnieje"));
             return "categoryForm";
         } else {
-            categoryRepository.save(category);
+            categoryService.save(category);
         }
         return "redirect:/categoryList";
     }
 
     @GetMapping("/deleteCategory/{id}")
     public String deleteCategories(Model model, @PathVariable long id) {
-        model.addAttribute("category", categoryRepository.findAll());
-        categoryRepository.deleteById(id);
+        categoryService.delete(id);
+        model.addAttribute("category", categoryService.findAll());
         return "redirect:/categoryList";
     }
 
     @GetMapping("/categoryList")
     public String categoriesList(Model model) {
-        model.addAttribute("category", categoryRepository.findAll());
+        model.addAttribute("category", categoryService.findAll());
         return "categoryList";
     }
 }

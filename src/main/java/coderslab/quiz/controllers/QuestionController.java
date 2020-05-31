@@ -1,6 +1,7 @@
 package coderslab.quiz.controllers;
 
 import coderslab.quiz.entities.Question;
+import coderslab.quiz.interfaces.QuestionService;
 import coderslab.quiz.repositories.AnswerRepository;
 import coderslab.quiz.repositories.CategoryRepository;
 import coderslab.quiz.repositories.QuestionRepository;
@@ -27,17 +28,19 @@ public class QuestionController {
     private CategoryRepository categoryRepository;
     private QuestionRepository questionRepository;
     private AnswerRepository answerRepository;
+    private QuestionService questionService;
 
-    public QuestionController(CategoryRepository categoryRepository, QuestionRepository questionRepository, AnswerRepository answerRepository) {
+    public QuestionController(QuestionService questionService,CategoryRepository categoryRepository, QuestionRepository questionRepository, AnswerRepository answerRepository) {
         this.categoryRepository = categoryRepository;
         this.questionRepository = questionRepository;
         this.answerRepository = answerRepository;
+        this.questionService = questionService;
     }
 
     @GetMapping("/formQuestion")
     public String formQuestion(Model model) {
         model.addAttribute("question", new Question());
-        model.addAttribute("category", categoryRepository.findAll());
+        model.addAttribute("category", questionService.findAll());
         return "questionForm";
     }
 
@@ -46,17 +49,14 @@ public class QuestionController {
                                BindingResult bindingResult,
                                @RequestParam MultipartFile file,
                                ModelMap modelMap, Model model) {
-        //
+        //TODO
         //bindingResult.addError(new FieldError("User","email","email jest zajety"));
         if (bindingResult.hasErrors()) {
             return "questionForm";
         }
 
-
         modelMap.addAttribute("file", file);
-
         String[] elemnts = file.getOriginalFilename().split("\\.");
-
         Path path1 = Paths.get("src/main/resources/static/uploadedFiles/" + Timestamp.valueOf(LocalDateTime.now()) + "." + elemnts[elemnts.length - 1]);
 
         try {
@@ -68,9 +68,6 @@ public class QuestionController {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-
-
 
         question.setPicture(path1.toString());
         questionRepository.save(question);
@@ -94,7 +91,6 @@ public class QuestionController {
         questionRepository.delete(questionRepository.findById(id).get());
         return "redirect:/questionList";
     }
-
 
     @GetMapping("/questionList")
     public String questionList(Model model) {
