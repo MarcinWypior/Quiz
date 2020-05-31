@@ -27,5 +27,4 @@ public class RoleServiceImpl implements RoleService {
         return this.roleRepository.findOneByName(roleName);
     }
 
-
 }
