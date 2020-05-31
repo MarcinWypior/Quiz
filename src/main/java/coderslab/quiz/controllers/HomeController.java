@@ -1,7 +1,6 @@
 package coderslab.quiz.controllers;
 
 import coderslab.quiz.Model.SelectedCategories;
-import coderslab.quiz.entities.Category;
 import coderslab.quiz.interfaces.AnswerService;
 import coderslab.quiz.interfaces.CategoryService;
 import coderslab.quiz.interfaces.QuestionService;
@@ -10,8 +9,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 public class HomeController {
@@ -33,8 +34,9 @@ public class HomeController {
     public String home() { return "home"; }
 
     @ModelAttribute("categoriesAvailable")
-    public List<Category> allCategories() {
-        return categoryService.findAll();
+    public List<String> allCategories() {
+        List<String> categoriesString = categoryService.findAll().stream().map(e -> e.getCategoryName()).collect(Collectors.toList());
+        return categoriesString;
     }
 
 
@@ -46,11 +48,9 @@ public class HomeController {
     }
 
     @PostMapping("/selectCategories")
-    public String postForm(@ModelAttribute ("selectedCategories") List<Category> categories) {
-        return categories.toString();
+    @ResponseBody
+    public String postForm(@ModelAttribute("selectedCategories") SelectedCategories selectedCategories) {
+        return selectedCategories.getCategories().toString();
     }
-
-
-
 
 }

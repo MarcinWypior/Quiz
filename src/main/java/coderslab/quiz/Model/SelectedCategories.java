@@ -1,17 +1,15 @@
 package coderslab.quiz.Model;
 
-import coderslab.quiz.entities.Category;
-
 import java.util.ArrayList;
 
 public class SelectedCategories {
-    private ArrayList<Category> categories;
+    private ArrayList<String> categories;
 
-    public ArrayList<Category> getCategories() {
+    public ArrayList<String> getCategories() {
         return categories;
     }
 
-    public void setCategories(ArrayList<Category> categories) {
+    public void setCategories(ArrayList<String> categories) {
         this.categories = categories;
     }
 

@@ -8,7 +8,8 @@
 <body>
 
 <form:form method="post" modelAttribute="selectedCategories" action="/selectCategories">
-<form:checkboxes path="categories" items="${categoriesAvailable}" />
+<form:select path="categories" items="${categoriesAvailable}"/>
+    <br>
     <input type="submit"/>
 </form:form>
 <br>
