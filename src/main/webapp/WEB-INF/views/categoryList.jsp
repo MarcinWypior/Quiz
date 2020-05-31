@@ -34,8 +34,6 @@
 
 <a href="questionList">Lista pytań</a>
 <br>
-<a href="categoryList">Lista kategorii</a>
-<br>
 <a href="/home">strona glowna</a>
 <br>
 </body>

@@ -44,20 +44,16 @@
             <td>${answer.text}</td>
             <td>
                 <a href="/deleteAnswer/${answer.id}">x</a>
-                &nbsp;
-
+                &nbsp;&nbsp;&nbsp;
             </td>
         </tr>
-        &nbsp;&nbsp;
+
     </c:forEach>
 
 
     <c:if test="${not empty question.id}">
         <a href="/formAnswer/${question.id}">dodaj odpowiedz</a>
     </c:if>
-    <c:otherwise>
-        zapisz pytanie aby móc dodawać odpowiedzi
-    </c:otherwise>
 
     <br>
     <c:if test="${not empty question.picture}">
@@ -68,9 +64,10 @@
 
 </form:form>
 
-<a href="questionList">Lista pytań</a>
 <br>
-<a href="categoryList">Lista kategorii</a>
+<a href="/questionList">Lista pytań</a>
+<br>
+<a href="/categoryList">Lista kategorii</a>
 <br>
 </body>
 </html>
