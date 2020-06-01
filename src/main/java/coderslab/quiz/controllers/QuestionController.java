@@ -4,9 +4,6 @@ import coderslab.quiz.entities.Question;
 import coderslab.quiz.interfaces.AnswerService;
 import coderslab.quiz.interfaces.CategoryService;
 import coderslab.quiz.interfaces.QuestionService;
-import coderslab.quiz.repositories.AnswerRepository;
-import coderslab.quiz.repositories.CategoryRepository;
-import coderslab.quiz.repositories.QuestionRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -28,9 +25,6 @@ import java.time.LocalDateTime;
 
 @Controller
 public class QuestionController {
-    private CategoryRepository categoryRepository;
-    private QuestionRepository questionRepository;
-    private AnswerRepository answerRepository;
     private QuestionService questionService;
     private CategoryService categoryService;
     private AnswerService answerService;

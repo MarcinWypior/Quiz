@@ -8,4 +8,5 @@ import java.util.List;
 public interface QuestionRepository extends JpaRepository<Question,Long> {
     Question findFirstByQuery(String query);
     List<Question> findAllByCategoryCategoryName(String categoryName);
+    Question findByQuery(String query);
 }

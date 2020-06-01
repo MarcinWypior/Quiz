@@ -37,6 +37,7 @@ public class AnswerController {
     public String answerForm(Model model, @PathVariable Long id) {
         model.addAttribute("answer", new Answer());
         model.addAttribute("question", questionService.findById(id));
+
         return "answerForm";
     }
 

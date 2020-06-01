@@ -18,8 +18,8 @@ Dodaj nową odpowiedz na pytanie ${question.query}
     <div>
         <label> <form:input path="text" placeholder="nowa odpowiedź"/></label>
         <form:errors path="text" />
-<%--        <label>prawdziwa odpowiedz<form:checkbox path="isTrue"/></label>--%>
-<%--        nie wiem czemu nie widzi atrybutu boolean --%>
+        <label>prawdziwa odpowiedz<input type="checkbox" name="proper" value="1"/></label>
+        to ten widok
     </div>
     <input name="dodaj" type="submit"/>
 </form:form>

@@ -11,7 +11,7 @@ public class Answer {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String text;
-    private boolean isTrue;
+    private boolean proper;
 
     public void setId(Long id) {
         this.id = id;
@@ -21,9 +21,6 @@ public class Answer {
         this.text = text;
     }
 
-    public void setTrue(boolean aTrue) {
-        isTrue = aTrue;
-    }
 
     public void setQuestion(Question question) {
         this.question = question;
@@ -43,8 +40,12 @@ public class Answer {
     }
 
 
-    public boolean isTrue() {
-        return isTrue;
+    public boolean isProper() {
+        return proper;
+    }
+
+    public void setProper(boolean proper) {
+        this.proper = proper;
     }
 
     public Question getQuestion() {
@@ -56,8 +57,8 @@ public class Answer {
         return "Answer{" +
                 "id=" + id +
                 ", text='" + text + '\'' +
-                ", isTrue=" + isTrue +
                 ", question=" + question +
                 '}';
     }
+
 }

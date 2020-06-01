@@ -9,8 +9,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -39,7 +39,6 @@ public class HomeController {
         return categoriesString;
     }
 
-
     @GetMapping("/selectCategories")
     public String quiz(Model model){
         SelectedCategories selectedCategories=new SelectedCategories();
@@ -48,9 +47,12 @@ public class HomeController {
     }
 
     @PostMapping("/selectCategories")
-    @ResponseBody
-    public String postForm(@ModelAttribute("selectedCategories") SelectedCategories selectedCategories) {
-        return selectedCategories.getCategories().toString();
+    public String postForm(@ModelAttribute("selectedCategories") SelectedCategories selectedCategories,Model model) {
+        ArrayList<String> categories = selectedCategories.getCategories();
+
+        String query1 = categories.get(1);
+        model.addAttribute("question",questionService.findByQuery(categories.get(1)));
+        return "quiz";
     }
 
 }
