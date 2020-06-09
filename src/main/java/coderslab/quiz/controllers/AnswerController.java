@@ -64,6 +64,8 @@ public class AnswerController {
     @GetMapping("/deleteAnswer/{id}")
     public String deleteAnswer(Model model, @PathVariable long id) {
 
+
+
 //        answerService.delete(id);
 //        Answer firstById = answerService.findByID(id);
 //        answerRepository.delete(firstById);
