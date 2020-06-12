@@ -41,7 +41,19 @@
 
     <c:forEach items="${answers}" var="answer">
         <tr>
-            <td>${answer.text}</td>
+            <td>
+                <c:if test="${answer.proper==true}">
+                    <b>
+                </c:if>
+
+                    ${answer.text}
+
+                    <c:if test="${answer.proper==true}">
+                    </b>
+                        </c:if>
+
+
+            </td>
             <td>
                 <a href="/deleteAnswer/${answer.id}">x</a>
                 &nbsp;&nbsp;&nbsp;
