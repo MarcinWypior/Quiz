@@ -1,6 +1,7 @@
 package coderslab.quiz.service;
 
 import coderslab.quiz.entities.Answer;
+import coderslab.quiz.entities.Category;
 import coderslab.quiz.entities.Question;
 import coderslab.quiz.interfaces.QuestionService;
 import coderslab.quiz.repositories.QuestionRepository;
@@ -67,5 +68,10 @@ public class QuestionServiceImpl implements QuestionService {
 
     public Question findByQuery(String query){
        return questionRepository.findByQuery(query);
+    }
+
+    @Override
+    public List<Question> findAllinCategory(Category category) {
+        return questionRepository.findAllByCategory(category);
     }
 }

@@ -3,11 +3,11 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Formularz pytania</title>
+    <title>odpowiedz na pytanie</title>
 </head>
 <body>
 <%--@elvariable id="question" type="coderslab.quiz.entities.Question"--%>
-<form:form method="post" modelAttribute="question" action="/formQuestion" enctype="multipart/form-data" >
+<form:form method="post" modelAttribute="question" action="/results" enctype="multipart/form-data" >
     <div>
         <c:if test="${not empty question.picture}">
         </c:if>
@@ -19,7 +19,7 @@
     ${question.query}
 
     <form:select path="answerList" items="${answers}"  />
-    <input type="submit"/>
+    <input type="submit" title="sprawdź odpowiedź"/>
 
 </form:form>
 </body>

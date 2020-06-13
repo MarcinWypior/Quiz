@@ -1,6 +1,7 @@
 package coderslab.quiz.controllers;
 
 import coderslab.quiz.Model.SelectedCategories;
+import coderslab.quiz.entities.Category;
 import coderslab.quiz.interfaces.AnswerService;
 import coderslab.quiz.interfaces.CategoryService;
 import coderslab.quiz.interfaces.QuestionService;
@@ -9,10 +10,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Controller
 public class HomeController {
@@ -33,10 +34,10 @@ public class HomeController {
     @GetMapping("/")
     public String home() { return "home"; }
 
-    @ModelAttribute("categoriesAvailable")
-    public List<String> allCategories() {
-        List<String> categoriesString = categoryService.findAll().stream().map(e -> e.getCategoryName()).collect(Collectors.toList());
-        return categoriesString;
+    @ModelAttribute("categories")
+    public List<Category> allCategories() {
+        List<Category> categories = categoryService.findAll();
+        return categories;
     }
 
     @GetMapping("/selectCategories")
@@ -48,11 +49,22 @@ public class HomeController {
 
     @PostMapping("/selectCategories")
     public String postForm(@ModelAttribute("selectedCategories") SelectedCategories selectedCategories,Model model) {
-        ArrayList<String> categories = selectedCategories.getCategories();
+        ArrayList<Category> categories = selectedCategories.getCategories();
 
-        String query1 = categories.get(1);
-        model.addAttribute("question",questionService.findByQuery(categories.get(1)));
+        //model.addAttribute(questionService.findAllinCategory(categories.get(1).getCategoryName()));
+
+        Category category = categories.get(0);
+
+        model.addAttribute(questionService.findAllinCategory(category.getCategoryName()).get(0));
         return "quiz";
+    }
+
+    @PostMapping("/results")
+    @ResponseBody
+    public String results(){
+
+
+     return "wyświetlam wyniki";
     }
 
 }

@@ -82,4 +82,6 @@ public class Question {
     public boolean isOpenAnswer() {
         return isOpenAnswer;
     }
+
+
 }

@@ -3,12 +3,12 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Formularz pytania</title>
+    <title>wybierz kategorie </title>
 </head>
 <body>
 
 <form:form method="post" modelAttribute="selectedCategories" action="/selectCategories">
-<form:select path="categories" items="${categoriesAvailable}"/>
+<form:select path="categories" items="${categories}" itemLabel="categoryName" itemValue="id"/>
     <br>
     <input type="submit"/>
 </form:form>
