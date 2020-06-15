@@ -1,7 +1,9 @@
 package coderslab.quiz.controllers;
 
 import coderslab.quiz.Model.SelectedCategories;
+import coderslab.quiz.entities.Answer;
 import coderslab.quiz.entities.Category;
+import coderslab.quiz.entities.Question;
 import coderslab.quiz.interfaces.AnswerService;
 import coderslab.quiz.interfaces.CategoryService;
 import coderslab.quiz.interfaces.QuestionService;
@@ -54,8 +56,10 @@ public class HomeController {
         //model.addAttribute(questionService.findAllinCategory(categories.get(1).getCategoryName()));
 
         Category category = categories.get(0);
-
-        model.addAttribute(questionService.findAllinCategory(category.getCategoryName()).get(0));
+        Question question = questionService.findAllinCategory(category.getCategoryName()).get(0);
+        model.addAttribute(question);
+        List<Answer> answersForQuestion = questionService.findAnswersForQuestion(question);
+        model.addAttribute("answerList",answersForQuestion);
         return "quiz";
     }
 

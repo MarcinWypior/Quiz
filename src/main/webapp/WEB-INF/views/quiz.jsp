@@ -17,8 +17,9 @@
         </c:if>
     </div>
     ${question.query}
+    <br>
 
-    <form:select path="answerList" items="${answers}"  />
+    <form:checkboxes path="answerList" items="${answerList}" itemLabel="text" itemValue="id"/>
     <input type="submit" title="sprawdź odpowiedź"/>
 
 </form:form>

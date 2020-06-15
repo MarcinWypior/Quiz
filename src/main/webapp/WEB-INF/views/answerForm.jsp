@@ -4,11 +4,6 @@
 <html>
 <head>
     <title>Formularz odpowiedzi na pytanie
-
-<%--        <c:if test="${not empty answer.question.query}">--%>
-<%--        ${answer.question.query}--%>
-<%--    </c:if>${answer.question.query}--%>
-
     </title>
 </head>
 <body>
