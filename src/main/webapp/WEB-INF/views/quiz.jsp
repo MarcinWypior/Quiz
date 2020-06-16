@@ -8,6 +8,7 @@
 <body>
 <%--@elvariable id="question" type="coderslab.quiz.entities.Question"--%>
 <form:form method="post" modelAttribute="question" action="/results" enctype="multipart/form-data" >
+    <form:hidden path="id" />
     <div>
         <c:if test="${not empty question.picture}">
         </c:if>
@@ -19,7 +20,7 @@
     ${question.query}
     <br>
 
-    <form:checkboxes path="answerList" items="${answerList}" itemLabel="text" itemValue="id"/>
+    <form:checkboxes path="answerList" items="${answerList}" itemLabel="text"  itemValue="id" value="1" />
     <input type="submit" title="sprawdź odpowiedź"/>
 
 </form:form>

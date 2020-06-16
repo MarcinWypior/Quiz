@@ -59,14 +59,16 @@ public class HomeController {
         Question question = questionService.findAllinCategory(category.getCategoryName()).get(0);
         model.addAttribute(question);
         List<Answer> answersForQuestion = questionService.findAnswersForQuestion(question);
+        System.out.println(answersForQuestion);
         model.addAttribute("answerList",answersForQuestion);
         return "quiz";
     }
 
     @PostMapping("/results")
     @ResponseBody
-    public String results(){
+    public String results(@ModelAttribute Question question,Model model){
 
+        System.out.println(question);
 
      return "wyświetlam wyniki";
     }
