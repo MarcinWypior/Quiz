@@ -9,6 +9,7 @@ import coderslab.quiz.interfaces.CategoryService;
 import coderslab.quiz.interfaces.QuestionService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -59,16 +60,16 @@ public class HomeController {
         Question question = questionService.findAllinCategory(category.getCategoryName()).get(0);
         model.addAttribute(question);
         List<Answer> answersForQuestion = questionService.findAnswersForQuestion(question);
-        System.out.println(answersForQuestion);
+        //System.out.println("odpowiedzi" + answersForQuestion+"odpowiedzi\n");
         model.addAttribute("answerList",answersForQuestion);
         return "quiz";
     }
 
     @PostMapping("/results")
     @ResponseBody
-    public String results(@ModelAttribute Question question,Model model){
+    public String results(@ModelAttribute Question question, BindingResult bindingResult){
 
-        System.out.println(question);
+        System.out.println(" odpowiedz wrocila "+question.getAnswerList()+" odpowiedz wrocila");
 
      return "wyświetlam wyniki";
     }

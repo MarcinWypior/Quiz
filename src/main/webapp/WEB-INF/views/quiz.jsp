@@ -7,7 +7,7 @@
 </head>
 <body>
 <%--@elvariable id="question" type="coderslab.quiz.entities.Question"--%>
-<form:form method="post" modelAttribute="question" action="/results" enctype="multipart/form-data" >
+<form:form method="post" modelAttribute="question" action="/results">
     <form:hidden path="id" />
     <div>
         <c:if test="${not empty question.picture}">
@@ -20,7 +20,7 @@
     ${question.query}
     <br>
 
-    <form:checkboxes path="answerList" items="${answerList}" itemLabel="text"  itemValue="id" value="1" />
+    <form:select path="answerList" items="${answerList}" itemLabel="text"  itemValue="id"/>
     <input type="submit" title="sprawdź odpowiedź"/>
 
 </form:form>
