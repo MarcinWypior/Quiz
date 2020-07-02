@@ -28,18 +28,14 @@
 
     <div>
         <c:if test="${not empty question.picture}">
-            <img src="<c:url value="${question.picture}"/>
             zmień obrazek
         </c:if>
 
         <c:if test="${empty question.picture}">
-
-        <img src="<c:url value="${question.picture}"/>
             załącz obrazek
         </c:if>
 
         <input type="file" name="file" />
-
     </div>
 
 
