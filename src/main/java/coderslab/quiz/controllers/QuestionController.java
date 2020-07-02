@@ -58,7 +58,7 @@ public class QuestionController {
 
         modelMap.addAttribute("file", file);
         String[] elemnts = file.getOriginalFilename().split("\\.");
-        Path path1 = Paths.get("src/main/resources/static/uploadedFiles/" + Timestamp.valueOf(LocalDateTime.now()) + "." + elemnts[elemnts.length - 1]);
+        Path path1 = Paths.get("resources/static/uploadedFiles/" + Timestamp.valueOf(LocalDateTime.now()) + "." + elemnts[elemnts.length - 1]);
 
         try {
             InputStream inputStream = new ByteArrayInputStream(file.getBytes());

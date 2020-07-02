@@ -15,7 +15,7 @@
 
         <c:if test="${empty question.picture}">
 <%--            src/main/resources/static/uploadedFiles/2020-06-12 21:11:44.903894.--%>
-            <img src="<c:url value="resources/images/icon-facebook.svg"/>
+            <img src="<c:url value="${question.picture}"/>
         </c:if>
     </div>
     ${question.query}
