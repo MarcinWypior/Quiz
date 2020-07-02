@@ -1,5 +1,6 @@
 package coderslab.quiz.service;
 
+
 import coderslab.quiz.Model.CurrentUser;
 import coderslab.quiz.entities.Role;
 import coderslab.quiz.entities.User;
@@ -22,6 +23,7 @@ public class SpringDataUserDetailsService implements UserDetailsService {
     public void setUserRepository(UserService userService) {
         this.userService = userService;
     }
+
 
     @Override
     public UserDetails loadUserByUsername(String username) {

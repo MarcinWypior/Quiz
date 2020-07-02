@@ -14,7 +14,7 @@
         </c:if>
 
         <c:if test="${empty question.picture}">
-            załącz obrazek
+            <img src="<c:url value="resources/images/icon-facebook.svg"/>
         </c:if>
     </div>
     ${question.query}
