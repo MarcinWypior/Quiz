@@ -9,7 +9,8 @@ public class MvcConfig implements WebMvcConfigurer {
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry
-                .addResourceHandler("/resources/**")
-                .addResourceLocations("/resources/");
+        .addResourceHandler("/pngFiles/**")
+                .addResourceLocations("file:ext-resources/")
+                .setCachePeriod(0);
     }
 }

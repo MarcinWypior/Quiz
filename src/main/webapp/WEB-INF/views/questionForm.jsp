@@ -81,7 +81,7 @@
 
 </form:form>
 
-<img src="<c:url value="resources/test.png"/>" alt="test"/>
+<img src="<c:url value="rescources/images/signature.svg"/>" alt="test"/>
 <img src="test.jpg" alt="test">
 <img src="signature.svg">
 <img src="../resources/test.png" alt="test">
