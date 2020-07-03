@@ -58,8 +58,8 @@ public class QuestionController {
 
         modelMap.addAttribute("file", file);
         String[] elemnts = file.getOriginalFilename().split("\\.");
-        Path path1 = Paths.get("src/main/resources/static/uploadedFiles/" + Timestamp.valueOf(LocalDateTime.now()) + "." + elemnts[elemnts.length - 1]);
-
+        Path path1 = Paths.get("src/main/webapp/WEB-INF/views/resources/" + Timestamp.valueOf(LocalDateTime.now()) + "." + elemnts[elemnts.length - 1]);
+        //src/main/webapp/WEB-INF/views/resources
         try {
             InputStream inputStream = new ByteArrayInputStream(file.getBytes());
             Files.copy(
@@ -69,6 +69,7 @@ public class QuestionController {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
 
         question.setPicture(path1.toString());
         questionService.save(question);

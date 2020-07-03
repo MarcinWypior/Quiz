@@ -1,6 +1,8 @@
 <%@ taglib prefix="form"  uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<!DOCTYPE html>
+<html lang="pl">
 <html>
 <head>
     <title>Formularz pytania</title>
@@ -74,8 +76,16 @@
 
     <input type="submit" />
 
+    <img src="<c:url value="resources/images/signature.svg"/>"/>
+    <img src="<c:url value="resources/images/signature.svg"/>"/>
+
 </form:form>
 
+<img src="<c:url value="resources/test.png"/>" alt="test"/>
+<img src="test.jpg" alt="test">
+<img src="signature.svg">
+<img src="../resources/test.png" alt="test">
+<img src="../resources/test.png" alt="test">
 <br>
 <a href="/questionList">Lista pytań</a>
 <br>
