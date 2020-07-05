@@ -58,7 +58,7 @@ public class QuestionController {
 
         modelMap.addAttribute("file", file);
         String[] elemnts = file.getOriginalFilename().split("\\.");
-        Path path1 = Paths.get("src/main/webapp/WEB-INF/views/resources/" + Timestamp.valueOf(LocalDateTime.now()) + "." + elemnts[elemnts.length - 1]);
+        Path path1 = Paths.get("src/main/webapp/rescources/uploaded/pictures/" + Timestamp.valueOf(LocalDateTime.now()) + "." + elemnts[elemnts.length - 1]);
         //src/main/webapp/WEB-INF/views/resources
         try {
             InputStream inputStream = new ByteArrayInputStream(file.getBytes());
@@ -70,8 +70,8 @@ public class QuestionController {
             e.printStackTrace();
         }
 
-
-        question.setPicture(path1.toString());
+        question.setPicture(path1.toString().substring(16));
+        //TODO
         questionService.save(question);
 
         model.addAttribute("category", categoryService.findAll());

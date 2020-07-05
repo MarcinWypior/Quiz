@@ -76,16 +76,12 @@
 
     <input type="submit" />
 
-    <img src="<c:url value="resources/images/signature.svg"/>"/>
-    <img src="<c:url value="resources/images/signature.svg"/>"/>
 
 </form:form>
+<img src="<c:url value="rescources/uploaded/pictures/${question.picture}"/>" alt="obrazek dla quizu"/>
 
-<img src="<c:url value="rescources/images/signature.svg"/>" alt="test"/>
-<img src="test.jpg" alt="test">
-<img src="signature.svg">
-<img src="../resources/test.png" alt="test">
-<img src="../resources/test.png" alt="test">
+<img src="<c:url value="rescources/images/icon-gear.png"/>" alt="dla testu"/>
+${question.picture}
 <br>
 <a href="/questionList">Lista pytań</a>
 <br>
