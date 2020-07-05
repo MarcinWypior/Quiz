@@ -6,6 +6,7 @@
 <html>
 <head>
     <title>Formularz pytania</title>
+    <link rel="stylesheet" href="<c:url value="resources/css/style.css"/>"/>
 </head>
 <body>
 <form:form method="post" modelAttribute="question" action="/formQuestion" enctype="multipart/form-data" >
@@ -78,10 +79,8 @@
 
 
 </form:form>
-<img src="<c:url value="rescources/uploaded/pictures/${question.picture}"/>" alt="obrazek dla quizu"/>
+<img class="picture" src="<c:url value="rescources/uploaded/pictures/${question.picture}"/>" alt="picture for ${question.id}"/>
 
-<img src="<c:url value="rescources/images/icon-gear.png"/>" alt="dla testu"/>
-${question.picture}
 <br>
 <a href="/questionList">Lista pytań</a>
 <br>
