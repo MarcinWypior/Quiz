@@ -72,11 +72,11 @@ public class QuestionController {
             e.printStackTrace();
         }
 
+            if(file.getSize()>10)
+            question.setPicture(path1.toString().substring(16));
 
+            //System.out.println("aktualna scieżka do obrazka " + question.getPicture());
             questionService.save(question);
-
-        System.out.println("aktualna scieżka do obrazka " + question.getPicture());
-
 
         model.addAttribute("category", categoryService.findAll());
         model.addAttribute("answers", answerService.findByQuestion(questionService.findById(question.getId())));
