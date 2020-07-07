@@ -50,16 +50,18 @@ public class QuestionController {
                                @RequestParam MultipartFile file,
                                ModelMap modelMap, Model model) {
         //TODO
-        if(questionService.doesQuestionExist(question.getQuery()))
+        if(questionService.doesQuestionExist(question.getQuery())&&(question.getId()==null))
         bindingResult.addError(new FieldError("Question","query","takie pytanie już istnieje"));
         if (bindingResult.hasErrors()) {
             return "questionForm";
         }
 
+        if (question.getPicture()==null)
+            question.setPicture(questionService.findById(question.getId()).getPicture());
+
         modelMap.addAttribute("file", file);
         String[] elemnts = file.getOriginalFilename().split("\\.");
-        Path path1 = Paths.get("src/main/webapp/rescources/uploaded/pictures/" + Timestamp.valueOf(LocalDateTime.now()) + "." + elemnts[elemnts.length - 1]);
-        //src/main/webapp/WEB-INF/views/resources
+        Path path1 = Paths.get("src/main/webapp/resources/uploaded/pictures/" + Timestamp.valueOf(LocalDateTime.now()) + "." + elemnts[elemnts.length - 1]);
         try {
             InputStream inputStream = new ByteArrayInputStream(file.getBytes());
             Files.copy(
@@ -70,13 +72,14 @@ public class QuestionController {
             e.printStackTrace();
         }
 
-        question.setPicture(path1.toString().substring(16));
-        //TODO
-        questionService.save(question);
+
+            questionService.save(question);
+
+        System.out.println("aktualna scieżka do obrazka " + question.getPicture());
+
 
         model.addAttribute("category", categoryService.findAll());
         model.addAttribute("answers", answerService.findByQuestion(questionService.findById(question.getId())));
-
         return "questionForm";
     }
 

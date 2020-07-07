@@ -6,6 +6,9 @@
 <html>
 <head>
     <title>Formularz pytania</title>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
     <link rel="stylesheet" href="<c:url value="resources/css/style.css"/>"/>
 </head>
 <body>
@@ -66,21 +69,19 @@
     </c:forEach>
 
 
-    <c:if test="${not empty question.id}">
-        <a href="/formAnswer/${question.id}">dodaj odpowiedz</a>
-    </c:if>
-
     <br>
     <c:if test="${not empty question.picture}">
-        <img src="${question.picture}">
+        <img src="<c:url value="../../${question.picture}"/>" alt="picture for question ${question_id}"/>
+    </c:if>
+
+    <c:if test="${not empty question.id}">
+        <a href="/formAnswer/${question.id}">dodaj odpowiedz</a>
     </c:if>
 
     <input type="submit" />
 
 
 </form:form>
-<img class="picture" src="<c:url value="rescources/uploaded/pictures/${question.picture}"/>" alt="picture for ${question.id}"/>
-
 <br>
 <a href="/questionList">Lista pytań</a>
 <br>
