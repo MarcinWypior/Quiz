@@ -33,7 +33,7 @@ public class Answer {
         return id;
     }
 
-    @Size(max = 30)
+    @Size(max = 40)
     @NotEmpty
     public String getText() {
         return text;

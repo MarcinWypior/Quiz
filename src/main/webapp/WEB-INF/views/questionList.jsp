@@ -10,9 +10,11 @@
 <html>
 <head>
     <title>lista kategorii</title>
+    <link rel="stylesheet" href="<c:url value="../../resources/css/style.css"/>"/>
 </head>
 <body>
-<table>
+<div class="content">
+<table class="table">
     <tr>
         <th>Nazwa kategorii</th>
         <th>o co pytamy ?</th>
@@ -23,8 +25,7 @@
             <td>${question.query}</td>
             <td>
                 <a href="/formQuestion/${question.id}">Edytuj</a>
-            </td>
-            <td>
+                <br>
                 <a href="/deleteQuestion/${question.id}">usuń</a>
             </td>
         </tr>
@@ -35,6 +36,6 @@
 <a href="/home">Strona glowna</a>
 <br>
 <a href="categoryList">Lista kategorii</a>
-<br>
+</div>
 </body>
 </html>

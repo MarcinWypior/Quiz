@@ -13,6 +13,9 @@ public interface QuestionService {
     void save(Question question);
     void delete(Long id);
     void update(Question question);
+
+    List<Answer> findTrueAnswers(Question question);
+
     List<Question> findAll();
     List<Question> findAllinCategory(String categoryName);
     List<Question> findAllinCategory(Category category);

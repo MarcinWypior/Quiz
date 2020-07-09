@@ -8,6 +8,7 @@ import coderslab.quiz.repositories.QuestionRepository;
 import coderslab.quiz.repositories.UserRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -21,6 +22,21 @@ public class QuestionServiceImpl implements QuestionService {
     ) {
         this.questionRepository = questionRepository;
         this.userRepository = userRepository;
+    }
+
+    @Override
+    public List<Answer> findTrueAnswers(Question question){
+
+        List<Answer> trueAnswers=new ArrayList<>();
+        List<Integer>properAnswersIDs=new ArrayList<>();
+        question.getAnswerList().stream().forEach(answer->{
+            {
+                if(answer.isProper())
+                    trueAnswers.add(answer);
+            }
+        });
+
+        return trueAnswers;
     }
 
     @Override

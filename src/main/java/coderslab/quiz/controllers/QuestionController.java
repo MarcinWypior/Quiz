@@ -62,19 +62,28 @@ public class QuestionController {
         modelMap.addAttribute("file", file);
         String[] elemnts = file.getOriginalFilename().split("\\.");
         Path path1 = Paths.get("src/main/webapp/resources/uploaded/pictures/" + Timestamp.valueOf(LocalDateTime.now()) + "." + elemnts[elemnts.length - 1]);
-        try {
-            InputStream inputStream = new ByteArrayInputStream(file.getBytes());
-            Files.copy(
-                    inputStream,
-                    path1,
-                    StandardCopyOption.REPLACE_EXISTING);
-        } catch (IOException e) {
-            e.printStackTrace();
+
+        if (file.getSize()>0) {
+
+            try {
+                Files.delete(Paths.get("src/main/webapp/",questionService.findById(question.getId()).getPicture()));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            try {
+                InputStream inputStream = new ByteArrayInputStream(file.getBytes());
+                Files.copy(
+                        inputStream,
+                        path1,
+                        StandardCopyOption.REPLACE_EXISTING);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
 
-            if(file.getSize()>10)
+        if(file.getSize()>10)
             question.setPicture(path1.toString().substring(16));
-
             //System.out.println("aktualna scieżka do obrazka " + question.getPicture());
             questionService.save(question);
 
@@ -92,9 +101,8 @@ public class QuestionController {
     }
 
     @GetMapping("/deleteQuestion/{id}")
-    public String deleteQuestionForm(Model model, @PathVariable long id) {
+    public String deleteQuestionForm(@PathVariable long id) {
         questionService.delete(id);
-        //questionRepository.delete(questionRepository.findById(id).get());
         return "redirect:/questionList";
     }
 

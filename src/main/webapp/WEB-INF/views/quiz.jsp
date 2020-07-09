@@ -4,6 +4,7 @@
 <html>
 <head>
     <title>odpowiedz na pytanie</title>
+    <link rel="stylesheet" href="<c:url value="../../resources/css/style.css"/>"/>
 </head>
 <body>
 <%--@elvariable id="question" type="coderslab.quiz.entities.Question"--%>

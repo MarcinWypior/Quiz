@@ -12,7 +12,9 @@
     <title>lista kategorii</title>
 </head>
 <body>
+<div class="content">
 <table>
+
     <tr>
         <th>Nazwa kategorii</th>
         <th>Akcje</th>
@@ -28,10 +30,12 @@
             </td>
         </tr>
     </c:forEach>
-</table>
-<a href="/formCategory">Dodaj</a>
-<br>
 
+</table>
+</div>
+
+<a href="/formCategory">Dodaj nowe pytanie</a>
+<br>
 <a href="questionList">Lista pytań</a>
 <br>
 <a href="/home">strona glowna</a>

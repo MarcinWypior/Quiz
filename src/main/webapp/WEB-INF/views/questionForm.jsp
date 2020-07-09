@@ -9,30 +9,29 @@
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
-    <link rel="stylesheet" href="<c:url value="resources/css/style.css"/>"/>
+    <link rel="stylesheet" href="<c:url value="../../resources/css/style.css"/>"/>
 </head>
 <body>
+<div class="content">
 <form:form method="post" modelAttribute="question" action="/formQuestion" enctype="multipart/form-data" >
     <form:hidden path="id" />
     <input type="hidden" name="proposition" value="false" />
     <div>
-        <label>
+        <label class="query">
             o co bedziesz pytać gracza ?
             <br>
-            <form:input path="query" />
+            <form:textarea cssClass="query" path="query" />
         </label>
         <form:errors path="query" />
-    </div>
 
-    <div>
         <label>
+            <br>
             do jakiej kategori bedzie należeć pytanie
-            <form:select path="category.id" items="${category}" itemLabel="categoryName" itemValue="id" />
+            <form:select cssClass="query" path="category.id" items="${category}" itemLabel="categoryName" itemValue="id" />
         </label>
+        <br>
         <form:errors path="category" />
-    </div>
 
-    <div>
         <c:if test="${not empty question.picture}">
             zmień obrazek
         </c:if>
@@ -41,22 +40,27 @@
             załącz obrazek
         </c:if>
 
-        <input type="file" name="file" />
+        <input class="query" type="file" name="file" />
     </div>
 
+    <br>
+    <c:if test="${not empty question.picture}">
+        <img class="picture" src="<c:url value="../../${question.picture}"/>" alt="picture for question ${question_id}"/>
+    </c:if>
 
+    <br>
     <c:forEach items="${answers}" var="answer">
         <tr>
             <td>
                 <c:if test="${answer.proper==true}">
-                    <b>
-                </c:if>
+                <b>
+                    </c:if>
 
-                    ${answer.text}
+                        ${answer.text}
 
                     <c:if test="${answer.proper==true}">
-                    </b>
-                        </c:if>
+                </b>
+                </c:if>
 
 
             </td>
@@ -68,20 +72,19 @@
 
     </c:forEach>
 
-
     <br>
-    <c:if test="${not empty question.picture}">
-        <img src="<c:url value="../../${question.picture}"/>" alt="picture for question ${question_id}"/>
-    </c:if>
-
     <c:if test="${not empty question.id}">
         <a href="/formAnswer/${question.id}">dodaj odpowiedz</a>
     </c:if>
 
-    <input type="submit" />
 
+
+    <div>
+    <input type="submit" value="zapisz" />
+    </div>
 
 </form:form>
+</div>
 <br>
 <a href="/questionList">Lista pytań</a>
 <br>

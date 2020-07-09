@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 public class HomeController {
@@ -25,17 +26,17 @@ public class HomeController {
     private QuestionService questionService;
 
 
-    public HomeController(AnswerService answerService, CategoryService categoryService, QuestionService questionService)
-    {
+    public HomeController(AnswerService answerService, CategoryService categoryService, QuestionService questionService) {
         this.questionService = questionService;
         this.answerService = answerService;
         this.categoryService = categoryService;
     }
 
 
-
     @GetMapping("/")
-    public String home() { return "home"; }
+    public String home() {
+        return "home";
+    }
 
     @ModelAttribute("categories")
     public List<Category> allCategories() {
@@ -44,14 +45,14 @@ public class HomeController {
     }
 
     @GetMapping("/selectCategories")
-    public String quiz(Model model){
-        SelectedCategories selectedCategories=new SelectedCategories();
-        model.addAttribute("selectedCategories",selectedCategories);
+    public String quiz(Model model) {
+        SelectedCategories selectedCategories = new SelectedCategories();
+        model.addAttribute("selectedCategories", selectedCategories);
         return "selectCategories";
     }
 
     @PostMapping("/selectCategories")
-    public String postForm(@ModelAttribute("selectedCategories") SelectedCategories selectedCategories,Model model) {
+    public String postForm(@ModelAttribute("selectedCategories") SelectedCategories selectedCategories, Model model) {
         ArrayList<Category> categories = selectedCategories.getCategories();
 
         //model.addAttribute(questionService.findAllinCategory(categories.get(1).getCategoryName()));
@@ -61,17 +62,34 @@ public class HomeController {
         model.addAttribute(question);
         List<Answer> answersForQuestion = questionService.findAnswersForQuestion(question);
         //System.out.println("odpowiedzi" + answersForQuestion+"odpowiedzi\n");
-        model.addAttribute("answerList",answersForQuestion);
+        model.addAttribute("answerList", answersForQuestion);
         return "quiz";
     }
 
     @PostMapping("/results")
     @ResponseBody
-    public String results(@ModelAttribute Question question, BindingResult bindingResult){
+    public String results(@ModelAttribute Question question, BindingResult bindingResult) {
 
-        System.out.println(" odpowiedz wrocila "+question.getAnswerList()+" odpowiedz wrocila");
+        List<Long> answersFromUser = question.getAnswerList().stream().map(answer->answer.getId()).collect(Collectors.toList());
+        List<Long> trueAnswersFromDB = questionService.findTrueAnswers(questionService.findById(question.getId())).stream().map(answer -> answer.getId()).collect(Collectors.toList());
 
-     return "wyświetlam wyniki";
+        double amoutOfCorrectAnswers=0;
+        for (Long answerFromDB:trueAnswersFromDB) {
+            for (Long answerFromUser:answersFromUser
+                 ) {
+                    if(answerFromDB.compareTo(answerFromUser)==0)
+                amoutOfCorrectAnswers++;
+            }
+        }
+
+        if (answersFromUser.size()>trueAnswersFromDB.size())
+            return "Udzieliłeś nadmiarowych odpowiedzi";
+        else
+            {
+            double results = amoutOfCorrectAnswers / (double) trueAnswersFromDB.size();
+            return "uzyskałeś" + results +"poprawnych odpowiedzi";
+            }
+
     }
 
 }
