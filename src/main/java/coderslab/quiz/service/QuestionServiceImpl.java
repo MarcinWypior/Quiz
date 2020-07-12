@@ -4,6 +4,7 @@ import coderslab.quiz.entities.Answer;
 import coderslab.quiz.entities.Category;
 import coderslab.quiz.entities.Question;
 import coderslab.quiz.interfaces.QuestionService;
+import coderslab.quiz.repositories.AnswerRepository;
 import coderslab.quiz.repositories.QuestionRepository;
 import coderslab.quiz.repositories.UserRepository;
 import org.springframework.stereotype.Service;
@@ -15,13 +16,16 @@ import java.util.List;
 public class QuestionServiceImpl implements QuestionService {
     private final UserRepository userRepository;
     private final QuestionRepository questionRepository;
+    private final AnswerRepository answerRepository;
 
     public QuestionServiceImpl(
             UserRepository userRepository,
-            QuestionRepository questionRepository
+            QuestionRepository questionRepository,
+            AnswerRepository answerRepository
     ) {
         this.questionRepository = questionRepository;
         this.userRepository = userRepository;
+        this.answerRepository = answerRepository;
     }
 
     @Override
@@ -89,5 +93,10 @@ public class QuestionServiceImpl implements QuestionService {
     @Override
     public List<Question> findAllinCategory(Category category) {
         return questionRepository.findAllByCategory(category);
+    }
+
+    @Override
+    public int countProperAnswers(Question question) {
+        return answerRepository.countProperAnswers(question);
     }
 }

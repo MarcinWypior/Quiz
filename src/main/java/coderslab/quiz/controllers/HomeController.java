@@ -63,6 +63,8 @@ public class HomeController {
         List<Answer> answersForQuestion = questionService.findAnswersForQuestion(question);
         //System.out.println("odpowiedzi" + answersForQuestion+"odpowiedzi\n");
         model.addAttribute("answerList", answersForQuestion);
+
+        model.addAttribute("howManyProperAnswers",questionService.countProperAnswers(question));
         return "quiz";
     }
 

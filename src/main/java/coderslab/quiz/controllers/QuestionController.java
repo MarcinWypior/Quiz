@@ -83,7 +83,7 @@ public class QuestionController {
         }
 
         if(file.getSize()>10)
-            question.setPicture(path1.toString().substring(16));
+            question.setPicture("../../"+path1.toString().substring(16));
             //System.out.println("aktualna scieżka do obrazka " + question.getPicture());
             questionService.save(question);
 

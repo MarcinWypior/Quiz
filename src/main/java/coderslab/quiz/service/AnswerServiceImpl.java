@@ -54,4 +54,9 @@ public class AnswerServiceImpl implements AnswerService {
     public Answer findByText(String text) {
         return answerRepository.findFirstByText(text);
     }
+
+    @Override
+    public int countProperAnswers(Question question) {
+        return answerRepository.countProperAnswers(question);
+    }
 }

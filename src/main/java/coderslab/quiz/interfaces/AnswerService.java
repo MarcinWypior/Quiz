@@ -12,5 +12,5 @@ public interface AnswerService {
     void save(Answer answer);
     void delete(Long id);
     Answer findByText(String text);
-
+    int countProperAnswers(Question question);
 }

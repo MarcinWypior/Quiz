@@ -5,26 +5,39 @@
 <head>
     <title>odpowiedz na pytanie</title>
     <link rel="stylesheet" href="<c:url value="../../resources/css/style.css"/>"/>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
 </head>
 <body>
-<%--@elvariable id="question" type="coderslab.quiz.entities.Question"--%>
+
+<div class="content">
 <form:form method="post" modelAttribute="question" action="/results">
     <form:hidden path="id" />
-    <div>
+        <br>
         <c:if test="${not empty question.picture}">
+            <img src="<c:url value="${question.picture}"/>" alt="picture for question ${question_id}"/>
         </c:if>
 
-        <c:if test="${empty question.picture}">
-<%--            src/main/resources/static/uploadedFiles/2020-06-12 21:11:44.903894.--%>
-            <img src="<c:url value="${question.picture}"/>
-        </c:if>
-    </div>
+        <br>
     ${question.query}
-    <br>
+    <c:if test="${howManyProperAnswers==1}">
+        tylko jedna odpowiedź jest poprawna
+    </c:if>
 
-    <form:select path="answerList" items="${answerList}" itemLabel="text"  itemValue="id"/>
-    <input type="submit" title="sprawdź odpowiedź"/>
+    <c:if test="${howManyProperAnswers>1}">
+        ${howManyProperAnswers} poprawnych odpowiedzi na to pytanie
+    </c:if>
+
+    <p class="answers">
+        <form:checkboxes cssClass="answer" delimiter="<br>" path="answerList" items="${answerList}" itemLabel="text"  itemValue="id"/>
+    </p>
+
+    <input type="submit" title="sprawdź odpowiedzi"/>
 
 </form:form>
+    </div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="<c:url value="resources/js/app.js"/>"></script>
 </body>
 </html>

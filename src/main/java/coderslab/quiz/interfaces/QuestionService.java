@@ -21,4 +21,9 @@ public interface QuestionService {
     List<Question> findAllinCategory(Category category);
 
     List<Answer> findAnswersForQuestion(Question question);
+
+    int countProperAnswers(Question question);
+
+//    @Query("SELECT b FROM Book b WHERE b.category = :category")
+//    List<Book> findAllByCategoryUsingQuery(@Param("category") Category category);
 }
