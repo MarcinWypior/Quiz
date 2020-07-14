@@ -1,5 +1,5 @@
 body {
-    height: 100%;
+    height: 95%;
 }
 
 .picture{
@@ -39,17 +39,24 @@ td{
     height: auto;
 }
 
-.answer{
-        text-align: center;
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-}
 
 .answers{
     display: block;
     margin-left: auto;
     margin-right: auto;
 }
+
+p .visibleAnswers{
+    width: 50%;
+    text-align: left;
+    border-width: 2px;
+    border-color: black;
+    border-style: dashed;
+}
+
+.invisible{
+    display: none;
+}
+
 
 

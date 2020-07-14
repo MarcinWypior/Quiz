@@ -20,7 +20,8 @@
         </c:if>
 
         <br>
-    ${question.query}
+    <p>${question.query}</p>
+
     <c:if test="${howManyProperAnswers==1}">
         tylko jedna odpowiedź jest poprawna
     </c:if>
@@ -29,9 +30,11 @@
         ${howManyProperAnswers} poprawnych odpowiedzi na to pytanie
     </c:if>
 
-    <p class="answers">
-        <form:checkboxes cssClass="answer" delimiter="<br>" path="answerList" items="${answerList}" itemLabel="text"  itemValue="id"/>
+    <p class="visibleAnswers">
+        <form:checkboxes cssClass="input" delimiter="<br>" path="answerList" items="${answerList}" itemLabel="text"  itemValue="id"/>
     </p>
+
+    <p class="invisible"></p>
 
     <input type="submit" title="sprawdź odpowiedzi"/>
 
