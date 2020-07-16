@@ -12,16 +12,19 @@
 <body>
 
 <div class="content">
-<form:form method="post" modelAttribute="question" action="/results">
+<form:form method="post" cssClass="form" modelAttribute="question" action="/results">
     <form:hidden path="id" />
         <br>
         <c:if test="${not empty question.picture}">
-            <img src="<c:url value="${question.picture}"/>" alt="picture for question ${question_id}"/>
+            <img class="graphics" src="<c:url value="${question.picture}"/>" alt="picture for question ${question_id}"/>
         </c:if>
 
         <br>
-    <p>${question.query}</p>
+    <p class="query">
+            ${question.query}
+    </p>
 
+    <p class="howManyProperAnswers">
     <c:if test="${howManyProperAnswers==1}">
         tylko jedna odpowiedź jest poprawna
     </c:if>
@@ -29,15 +32,18 @@
     <c:if test="${howManyProperAnswers>1}">
         ${howManyProperAnswers} poprawnych odpowiedzi na to pytanie
     </c:if>
+    </p>
+
 
     <p class="visibleAnswers">
-        <form:checkboxes cssClass="input" delimiter="<br>" path="answerList" items="${answerList}" itemLabel="text"  itemValue="id"/>
+        <form:checkboxes cssClass="input" path="answerList" items="${answerList}" itemLabel="text"  itemValue="id"/>
     </p>
 
     <p class="invisible"></p>
 
-    <input type="submit" title="sprawdź odpowiedzi"/>
+    <input class="submitButton" type="submit" value="sprawdź odpowiedzi" title="sprawdź odpowiedzi"/>
 
+    <p class="confirmYourChoice"> zatwierdź odpowiedzi</p>
 </form:form>
     </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>

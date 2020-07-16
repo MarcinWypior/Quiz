@@ -1,18 +1,12 @@
-body {
-    height: 95%;
-}
+html, body{
 
-.picture{
-    display: block;
+}
+.content{
+    max-width: 1500px;
+    text-align: center;
+    height: auto;
     margin-left: auto;
     margin-right: auto;
-    width: 50%;
-    height: 35%;
-}
-
-.content{
-    text-align: center;
-    height: 70%;
 }
 
 .table{
@@ -41,18 +35,73 @@ td{
 
 
 .answers{
-    display: block;
+}
+
+.graphics{
+    width:50%;
+    height:auto;
+    /*height: 60%;*/
+    left: 50%;
+    top: 50%;
+    border-radius: 8px;
+}
+
+.visibleAnswers{
+    width: 33%;
+    height: auto;
+    text-align: center;
     margin-left: auto;
     margin-right: auto;
 }
 
-p .visibleAnswers{
-    width: 50%;
-    text-align: left;
-    border-width: 2px;
-    border-color: black;
-    border-style: dashed;
+.howManyProperAnswers{
+    font-size: small;
+    font-weight: lighter;
 }
+
+.query{
+    font-weight: bold;
+    font-size: larger;
+}
+
+.label{
+    font-size: 60%;
+    height: auto;
+    width: 35%;
+    border-width: 1px;
+    border-color: black;
+    border-style: solid;
+    border-radius: 5px;
+    margin: 2%;
+    padding: 3%;
+    display: inline-block;
+    font-size: inherit;
+    text-align-all: center;
+}
+
+.checkedLabel{
+    color: white;
+    background: black;
+}
+
+.hoverover{
+    box-shadow: 10px 10px 5px grey;
+}
+
+.confirmYourChoice{
+    width: 35%;
+    height: 3%;
+    background: black;
+    color: white;
+    margin-right: auto;
+    margin-left: auto;
+    text-align: center;
+    font-weight: bolder;
+    font-size: xx-large;
+    padding: 1%;
+    border-radius: 6px;
+}
+
 
 .invisible{
     display: none;

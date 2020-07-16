@@ -5,6 +5,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
 
     var inputs = $(".input");
+    var submitButton = $(".submitButton");
     var placeToMoveInputs=$(".invisible");
 
 
@@ -14,29 +15,32 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     }
 
-    //inputs.appendTo(placeToMoveInputs);
+    submitButton.appendTo(placeToMoveInputs);
+    inputs.appendTo(placeToMoveInputs);
 
     $(function () {
-        var answer = $(".answer");
-        var answerInput = $(".answer input");
+
+        var answer = $("label");
+        answer.addClass("label");
 
         answer.on("click", function(){
-            if(answerInput.checked = false)
-                answerInput.checked=true;
-            else if(answerInput.checked=true)
-                answerInput.checked=false;
+            this.classList.toggle("checkedLabel");
+            answer.children()
         });
 
-})})
+        answer.hover(function(){
+            this.classList.toggle("hoverover");
+        });
+})
 
-// $(function() {
-//     var answer = $(".answer");
-//     var answerInput = $(".answer input");
-//
-//     descriptionDT.hide();
-//
-//     descriptionDD.on("click", function() {
-//         $(this).next().toggle();
-//     });
-//
-// });
+    $(function () {
+
+        var form = $(".form");
+        var confirm =$(".confirmYourChoice")
+
+        confirm.on("click", function(){
+            form.submit();
+        });
+
+    })
+})
