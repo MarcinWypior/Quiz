@@ -43,7 +43,12 @@
 
     <input class="submitButton" type="submit" value="sprawdź odpowiedzi" title="sprawdź odpowiedzi"/>
 
-    <p class="confirmYourChoice"> zatwierdź odpowiedzi</p>
+    <p class="confirmYourChoice">
+        <span class="counter">1</span>
+        zatwierdź odpowiedzi
+    </p>
+
+
 </form:form>
     </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>

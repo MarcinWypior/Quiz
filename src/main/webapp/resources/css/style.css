@@ -47,7 +47,7 @@ td{
 }
 
 .visibleAnswers{
-    width: 33%;
+    width: 55%;
     height: auto;
     text-align: center;
     margin-left: auto;
@@ -73,7 +73,7 @@ td{
     border-style: solid;
     border-radius: 5px;
     margin: 2%;
-    padding: 3%;
+    padding: 2%;
     display: inline-block;
     font-size: inherit;
     text-align-all: center;
@@ -89,7 +89,7 @@ td{
 }
 
 .confirmYourChoice{
-    width: 35%;
+    width: 40%;
     height: 3%;
     background: black;
     color: white;
@@ -100,11 +100,28 @@ td{
     font-size: xx-large;
     padding: 1%;
     border-radius: 6px;
+    display: inline-block;
+}
+
+.counter{
+    margin: 1%;
+    display: inline-block;
 }
 
 
 .invisible{
     display: none;
+}
+
+.left{
+    float: left;
+    margin: 2%;
+}
+
+.right{
+    color: white;
+    float: right;
+    margin: 2%;
 }
 
 
