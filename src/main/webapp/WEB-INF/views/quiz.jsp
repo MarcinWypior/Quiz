@@ -14,12 +14,12 @@
 <div class="content">
 <form:form method="post" cssClass="form" modelAttribute="question" action="/results">
     <form:hidden path="id" />
-        <br>
+    <div class="col1 in">
         <c:if test="${not empty question.picture}">
             <img class="graphics" src="<c:url value="${question.picture}"/>" alt="picture for question ${question_id}"/>
         </c:if>
-
-        <br>
+    </div>
+    <div class="col2 in">
     <p class="query">
             ${question.query}
     </p>
@@ -30,7 +30,7 @@
     </c:if>
 
     <c:if test="${howManyProperAnswers>1}">
-        ${howManyProperAnswers} poprawnych odpowiedzi na to pytanie
+        ${howManyProperAnswers} poprawne odpowiedzi na to pytanie
     </c:if>
     </p>
 
@@ -43,12 +43,12 @@
 
     <input class="submitButton" type="submit" value="sprawdź odpowiedzi" title="sprawdź odpowiedzi"/>
 
-    <p class="confirmYourChoice">
+    <div class="confirmYourChoice">
         <span class="counter">1</span>
         zatwierdź odpowiedzi
-    </p>
+    </div>
 
-
+    </div>
 </form:form>
     </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>

@@ -14,6 +14,12 @@
 <body>
 <div class="content">
 <form:form method="post" modelAttribute="question" action="/formQuestion" enctype="multipart/form-data" >
+    <br>
+    <c:if test="${not empty question.picture}">
+        <img class="picture" src="<c:url value="../../${question.picture}"/>" alt="picture for question ${question_id}"/>
+    </c:if>
+
+    <br>
     <form:hidden path="id" />
     <input type="hidden" name="proposition" value="false" />
     <div>
@@ -43,12 +49,7 @@
         <input class="query" type="file" name="file" />
     </div>
 
-    <br>
-    <c:if test="${not empty question.picture}">
-        <img class="picture" src="<c:url value="../../${question.picture}"/>" alt="picture for question ${question_id}"/>
-    </c:if>
 
-    <br>
     <c:forEach items="${answers}" var="answer">
         <tr>
             <td>

@@ -56,6 +56,9 @@ public class QuestionController {
             return "questionForm";
         }
 
+        if(question.getId()==null)
+            questionService.save(question);
+
         if (question.getPicture()==null)
             question.setPicture(questionService.findById(question.getId()).getPicture());
 
@@ -65,11 +68,17 @@ public class QuestionController {
 
         if (file.getSize()>0) {
 
-            try {
-                Files.delete(Paths.get("src/main/webapp/",questionService.findById(question.getId()).getPicture()));
-            } catch (IOException e) {
-                e.printStackTrace();
+            if(question.getPicture() != null) {
+
+
+                try {
+                    Files.delete(Paths.get("src/main/webapp/", questionService.findById(question.getId()).getPicture()));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
             }
+
 
             try {
                 InputStream inputStream = new ByteArrayInputStream(file.getBytes());

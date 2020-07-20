@@ -1,20 +1,37 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
-<%--
-  Created by IntelliJ IDEA.
-  User: dariu
-  Date: 27.05.2020
-  Time: 10:27
-  To change this template use File | Settings | File Templates.
---%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Title</title>
+  <title>odpowiedz na pytanie</title>
+  <link rel="stylesheet" href="<c:url value="../../resources/css/home.css"/>"/>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<%--  <meta http-equiv="X-UA-Compatible" content="ie=edge"/>--%>
 </head>
 <body>
-    <h1>HomePage</h1>
+<div class="dropdown">
+  <button class="dropbtn">Dropdown</button>
+  <div class="dropdown-content">
+    <a href="#"><a href="/selectCategories"> Graj </a></a>
+    <a href="#">Link 2</a>
+    <a href="#">Link 3</a>
+  </div>
+</div>
 
+<div class="container">
+<h1 class="ml4">
+  <span class="letters letters-1">Quizz!</span>
+  <span class="letters letters-2">czy?</span>
+  <span class="letters letters-3">Wiesz?</span>
+</h1>
+</div>
 
-<a href="/selectCategories"> Graj </a>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/2.0.2/anime.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/2.0.2/anime.min.js"></script>
+<script src="<c:url value="resources/js/home.js"/>"></script>
+
 </body>
 </html>

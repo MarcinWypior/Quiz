@@ -2,11 +2,19 @@ html, body{
 
 }
 .content{
-    max-width: 1500px;
+    display: table;
     text-align: center;
+    padding: 1%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%)
+}
+
+.picture{
+  max-width: 850px;
     height: auto;
-    margin-left: auto;
-    margin-right: auto;
 }
 
 .table{
@@ -38,45 +46,42 @@ td{
 }
 
 .graphics{
-    width:50%;
+    max-width:100%;
     height:auto;
-    /*height: 60%;*/
-    left: 50%;
-    top: 50%;
-    border-radius: 8px;
 }
 
 .visibleAnswers{
-    width: 55%;
-    height: auto;
     text-align: center;
-    margin-left: auto;
-    margin-right: auto;
 }
 
 .howManyProperAnswers{
-    font-size: small;
+    font-size: 0.9rem;
     font-weight: lighter;
+    font-style: italic;
+    text-align: center;
 }
 
 .query{
+    text-align: center;
     font-weight: bold;
-    font-size: larger;
+    font-size: 1.8rem;
+    width: 95%;
 }
 
 .label{
-    font-size: 60%;
+    font-size: 100%;
     height: auto;
-    width: 35%;
+    width: 260px;
     border-width: 1px;
     border-color: black;
     border-style: solid;
     border-radius: 5px;
-    margin: 2%;
+    margin: 1%;
     padding: 2%;
     display: inline-block;
-    font-size: inherit;
+    /*font-size: inherit;*/
     text-align-all: center;
+
 }
 
 .checkedLabel{
@@ -89,18 +94,16 @@ td{
 }
 
 .confirmYourChoice{
-    width: 40%;
-    height: 3%;
     background: black;
     color: white;
-    margin-right: auto;
-    margin-left: auto;
     text-align: center;
     font-weight: bolder;
-    font-size: xx-large;
+    font-size: 2rem;
     padding: 1%;
     border-radius: 6px;
     display: inline-block;
+    width: 70%;
+    height: auto;
 }
 
 .counter{
@@ -113,16 +116,25 @@ td{
     display: none;
 }
 
-.left{
-    float: left;
-    margin: 2%;
+.col1{
+    display: inline-block;
+    /*max-width: 950px;*/
+    /*max-height: 780px;*/
 }
 
-.right{
-    color: white;
-    float: right;
-    margin: 2%;
+.col2{
+    display: inline-block;
+    /*height: auto;*/
+    /*max-width: 900px;*/
+    vertical-align: top;
 }
+
+.in{
+    width: 800px;
+    height: auto;
+}
+
+
 
 
 
