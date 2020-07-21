@@ -52,6 +52,9 @@ public class QuestionController {
         //TODO
         if(questionService.doesQuestionExist(question.getQuery())&&(question.getId()==null))
         bindingResult.addError(new FieldError("Question","query","takie pytanie już istnieje"));
+
+        System.out.println("taki jest link do obrazka" +question.getPicture());
+
         if (bindingResult.hasErrors()) {
             return "questionForm";
         }
@@ -72,7 +75,7 @@ public class QuestionController {
 
 
                 try {
-                    Files.delete(Paths.get("src/main/webapp/", questionService.findById(question.getId()).getPicture()));
+                    Files.delete(Paths.get("src/main/webapp/", questionService.findById(question.getId()).getPicture().substring(6)));
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -99,6 +102,9 @@ public class QuestionController {
         model.addAttribute("category", categoryService.findAll());
         model.addAttribute("answers", answerService.findByQuestion(questionService.findById(question.getId())));
         return "questionForm";
+
+
+
     }
 
     @GetMapping("/formQuestion/{id}")

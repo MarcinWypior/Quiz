@@ -118,8 +118,8 @@ td{
 
 .col1{
     display: inline-block;
-    /*max-width: 950px;*/
-    /*max-height: 780px;*/
+    max-width: 950px;
+    max-height: 930px;
 }
 
 .col2{
@@ -127,11 +127,13 @@ td{
     /*height: auto;*/
     /*max-width: 900px;*/
     vertical-align: top;
+    max-width: 850px;
+    min-width: 470px;
+    height: auto;
 }
 
 .in{
-    width: 800px;
-    height: auto;
+    /*width: 800px;*/
 }
 
 

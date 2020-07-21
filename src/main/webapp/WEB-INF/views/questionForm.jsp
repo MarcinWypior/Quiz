@@ -16,7 +16,7 @@
 <form:form method="post" modelAttribute="question" action="/formQuestion" enctype="multipart/form-data" >
     <br>
     <c:if test="${not empty question.picture}">
-        <img class="picture" src="<c:url value="../../${question.picture}"/>" alt="picture for question ${question_id}"/>
+        <img class="picture" src="<c:url value="${question.picture}"/>" alt="picture for question ${question_id}"/>
     </c:if>
 
     <br>
@@ -45,6 +45,11 @@
         <c:if test="${empty question.picture}">
             załącz obrazek
         </c:if>
+
+<%--        <form:input cssClass="query" path="picture" />--%>
+<%--        <form:errors path="picture" />--%>
+
+
 
         <input class="query" type="file" name="file" />
     </div>
@@ -91,5 +96,6 @@
 <br>
 <a href="/categoryList">Lista kategorii</a>
 <br>
+<script src="<c:url value="resources/js/questionForm.js"/>"></script>
 </body>
 </html>

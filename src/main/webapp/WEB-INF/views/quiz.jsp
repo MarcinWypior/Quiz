@@ -20,6 +20,7 @@
         </c:if>
     </div>
     <div class="col2 in">
+        <br>
     <p class="query">
             ${question.query}
     </p>
