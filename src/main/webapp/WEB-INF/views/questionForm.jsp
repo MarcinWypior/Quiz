@@ -46,9 +46,8 @@
             załącz obrazek
         </c:if>
 
-<%--        <form:input cssClass="query" path="picture" />--%>
-<%--        <form:errors path="picture" />--%>
 
+        <input type="text" name="pictureAddress">
 
 
         <input class="query" type="file" name="file" />

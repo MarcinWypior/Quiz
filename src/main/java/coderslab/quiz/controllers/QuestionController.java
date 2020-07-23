@@ -48,12 +48,13 @@ public class QuestionController {
     public String questionForm(@Valid @ModelAttribute("question") Question question,
                                BindingResult bindingResult,
                                @RequestParam MultipartFile file,
-                               ModelMap modelMap, Model model) {
+                               ModelMap modelMap, Model model,String pictureAddress) {
         //TODO
         if(questionService.doesQuestionExist(question.getQuery())&&(question.getId()==null))
         bindingResult.addError(new FieldError("Question","query","takie pytanie już istnieje"));
 
-        System.out.println("taki jest link do obrazka" +question.getPicture());
+
+        System.out.println("adres obrazka z formularza bez bindowania"+pictureAddress);
 
         if (bindingResult.hasErrors()) {
             return "questionForm";
@@ -62,8 +63,11 @@ public class QuestionController {
         if(question.getId()==null)
             questionService.save(question);
 
+        //System.out.println(question.getPicture()+ "link do obrazka");
+
         if (question.getPicture()==null)
             question.setPicture(questionService.findById(question.getId()).getPicture());
+
 
         modelMap.addAttribute("file", file);
         String[] elemnts = file.getOriginalFilename().split("\\.");
@@ -74,6 +78,7 @@ public class QuestionController {
             if(question.getPicture() != null) {
 
 
+                //TODO ten blok trzeba przenieść gdziś indziej
                 try {
                     Files.delete(Paths.get("src/main/webapp/", questionService.findById(question.getId()).getPicture().substring(6)));
                 } catch (IOException e) {
@@ -96,6 +101,8 @@ public class QuestionController {
 
         if(file.getSize()>10)
             question.setPicture("../../"+path1.toString().substring(16));
+
+
             //System.out.println("aktualna scieżka do obrazka " + question.getPicture());
             questionService.save(question);
 
