@@ -22,14 +22,15 @@
 .menu{
     width: 100%;
     display: table;
+    height: 10%;
 }
 
 .dropdown-menu {
+
     display: table-cell;
-    height: 70px;
     width: 25%;
     background-color: black;
-    size: 3rem;
+    size: 2rem;
     color: white;
     text-align: center;
     vertical-align: middle;
@@ -46,11 +47,20 @@ a {
     text-decoration: none;
     color: white;
     font-weight: normal;
+    font-size: 2rem;
 }
 
 a:hover{
     background-color: white;
     color: black;
+    box-shadow: 5px 10px 8px #888888;
+}
+
+a:active{
+    background-color: white;
+    color: black;
+    font-size: 2rem;
+    font-weight: bolder;
     box-shadow: 5px 10px 8px #888888;
 }
 

@@ -8,7 +8,17 @@ import coderslab.quiz.repositories.AnswerRepository;
 import coderslab.quiz.repositories.QuestionRepository;
 import coderslab.quiz.repositories.UserRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -99,4 +109,57 @@ public class QuestionServiceImpl implements QuestionService {
     public int countProperAnswers(Question question) {
         return answerRepository.countProperAnswers(question);
     }
+
+    @Override
+    public Boolean savePicture(Question question, MultipartFile file){
+
+        String[] elemnts = file.getOriginalFilename().split("\\.");
+        Path path1 = Paths.get("src/main/webapp/resources/uploaded/pictures/" + Timestamp.valueOf(LocalDateTime.now()) + "." + elemnts[elemnts.length - 1]);
+
+        if (file.getSize()>0) {
+
+            deletePicture(question);
+
+            try {
+                InputStream inputStream = new ByteArrayInputStream(file.getBytes());
+                Files.copy(
+                        inputStream,
+                        path1,
+                        StandardCopyOption.REPLACE_EXISTING);
+            } catch (IOException e) {
+                e.printStackTrace();
+                return false;
+            }
+        }
+
+        if(file.getSize()>0)
+            question.setPicture("../../"+path1.toString().substring(16));
+
+        return true;
+    }
+
+    @Override
+    public Boolean deletePicture(Question question){
+
+        if((question.getPicture() != null)&&(question.getPicture()).startsWith("../../resources/uploaded/pictures")) {
+
+            //TODO ten blok trzeba przenieść gdziś indziej
+            try {
+                Files.delete(Paths.get("src/main/webapp/", findById(question.getId()).getPicture().substring(6)));
+            } catch (IOException e) {
+                e.printStackTrace();
+                return false;
+            }
+
+            question.setPicture(null);
+            System.out.println("picture deleted");
+            return true;
+        }else {
+            question.setPicture(null);
+            System.out.println("picture in not uploaded on local server");
+            return false;
+        }
+    }
+
+
 }

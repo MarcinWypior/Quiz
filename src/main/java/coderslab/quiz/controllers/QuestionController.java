@@ -4,6 +4,8 @@ import coderslab.quiz.entities.Question;
 import coderslab.quiz.interfaces.AnswerService;
 import coderslab.quiz.interfaces.CategoryService;
 import coderslab.quiz.interfaces.QuestionService;
+import com.cloudinary.Cloudinary;
+import com.cloudinary.utils.ObjectUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -13,15 +15,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
-import java.sql.Timestamp;
-import java.time.LocalDateTime;
+import java.util.Map;
 
 @Controller
 public class QuestionController {
@@ -48,69 +43,68 @@ public class QuestionController {
     public String questionForm(@Valid @ModelAttribute("question") Question question,
                                BindingResult bindingResult,
                                @RequestParam MultipartFile file,
-                               ModelMap modelMap, Model model,String pictureAddress) {
-        //TODO
-        if(questionService.doesQuestionExist(question.getQuery())&&(question.getId()==null))
-        bindingResult.addError(new FieldError("Question","query","takie pytanie już istnieje"));
+                               ModelMap modelMap, Model model, String pictureLink, Boolean pictureIncluded, String pictureLocation) {
 
+        System.out.println("wartość checkboxa pictureIncluded " + pictureIncluded);
+        System.out.println("wartość radiobuttona " + pictureLocation);
+        System.out.println("aktualny link do obrazka" + question.getPicture());
 
-        System.out.println("adres obrazka z formularza bez bindowania"+pictureAddress);
+        if (questionService.doesQuestionExist(question.getQuery()) && (question.getId() == null))
+            bindingResult.addError(new FieldError("Question", "query", question.getQuery(), false, null, null, "takie pytanie już istnieje"));
 
         if (bindingResult.hasErrors()) {
+            model.addAttribute("question", question);
             return "questionForm";
         }
 
-        if(question.getId()==null)
+        if (question.getId() == null)
             questionService.save(question);
 
-        //System.out.println(question.getPicture()+ "link do obrazka");
-
-        if (question.getPicture()==null)
+        if (question.getPicture() == null)
             question.setPicture(questionService.findById(question.getId()).getPicture());
 
+        if (pictureIncluded) {
+            switch (pictureLocation) {
+                case "local":
+                    questionService.savePicture(question, file);
+                    break;
+                case "link":
+                    questionService.deletePicture(question);
+                    question.setPicture(pictureLink);
+                    break;
+                case "external":
+                    System.out.println("TODO zewnętrzny hosting");
 
-        modelMap.addAttribute("file", file);
-        String[] elemnts = file.getOriginalFilename().split("\\.");
-        Path path1 = Paths.get("src/main/webapp/resources/uploaded/pictures/" + Timestamp.valueOf(LocalDateTime.now()) + "." + elemnts[elemnts.length - 1]);
+                    Cloudinary cloudinary = new Cloudinary(ObjectUtils.asMap(
+                            "cloud_name", "marcin1136",
+                            "api_key", "737373993878471",
+                            "api_secret", "m59_i4tJ2O2pmBuTrGW0W5USEKA"));
 
-        if (file.getSize()>0) {
+                    try {
+                        Map uploadResults = cloudinary.uploader().upload(file.getBytes(), ObjectUtils.emptyMap());
+                        System.out.println("link do wypchniętego obrazka"+uploadResults.get("url"));
+                        question.setPicture(uploadResults.get("url").toString());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                        System.out.println("hosting się zjebał");
+                    }
 
-            if(question.getPicture() != null) {
 
-
-                //TODO ten blok trzeba przenieść gdziś indziej
-                try {
-                    Files.delete(Paths.get("src/main/webapp/", questionService.findById(question.getId()).getPicture().substring(6)));
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-
+                    break;
+                default:
+                    break;
             }
 
-
-            try {
-                InputStream inputStream = new ByteArrayInputStream(file.getBytes());
-                Files.copy(
-                        inputStream,
-                        path1,
-                        StandardCopyOption.REPLACE_EXISTING);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+        } else {
+            questionService.deletePicture(question);
         }
 
-        if(file.getSize()>10)
-            question.setPicture("../../"+path1.toString().substring(16));
 
-
-            //System.out.println("aktualna scieżka do obrazka " + question.getPicture());
-            questionService.save(question);
+        questionService.save(question);
 
         model.addAttribute("category", categoryService.findAll());
         model.addAttribute("answers", answerService.findByQuestion(questionService.findById(question.getId())));
         return "questionForm";
-
-
 
     }
 
@@ -124,6 +118,7 @@ public class QuestionController {
 
     @GetMapping("/deleteQuestion/{id}")
     public String deleteQuestionForm(@PathVariable long id) {
+        questionService.deletePicture(questionService.findById(id));
         questionService.delete(id);
         return "redirect:/questionList";
     }

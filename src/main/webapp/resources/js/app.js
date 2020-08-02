@@ -53,7 +53,7 @@ document.addEventListener("DOMContentLoaded", function() {
     var timeLeft=parseInt(counter.innerHTML);
 
 
-    function boilEgg(time) {
+    function countdown(time) {
         var interval = setInterval(function() {
                 //document.querySelector(".form");
 
@@ -71,6 +71,6 @@ document.addEventListener("DOMContentLoaded", function() {
 
     }
 
-    boilEgg(10);
+    countdown(10);
 
 });

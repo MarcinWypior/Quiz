@@ -34,7 +34,7 @@
 </table>
 </div>
 
-<a href="/formCategory">Dodaj nowe pytanie</a>
+<a href="/formCategory">Dodaj nową kategorie</a>
 <br>
 <a href="questionList">Lista pytań</a>
 <br>

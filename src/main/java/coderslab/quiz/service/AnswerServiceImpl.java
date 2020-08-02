@@ -10,6 +10,7 @@ import coderslab.quiz.repositories.QuestionRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class AnswerServiceImpl implements AnswerService {
@@ -50,13 +51,23 @@ public class AnswerServiceImpl implements AnswerService {
         answerRepository.deleteById(id);
     }
 
-    @Override
-    public Answer findByText(String text) {
-        return answerRepository.findFirstByText(text);
-    }
 
     @Override
     public int countProperAnswers(Question question) {
         return answerRepository.countProperAnswers(question);
+    }
+
+
+    @Override
+    public boolean doAnswerExist(Question question, String answerText){
+
+        List<Answer> allAnswers = answerRepository.findByQuestion(question);
+        List<Answer> repeatedAnswers = allAnswers.stream().filter(e -> e.getText().trim().equalsIgnoreCase(answerText)).collect(Collectors.toList());
+
+        if(repeatedAnswers.stream().findAny().isPresent()) {
+            return true;
+        }
+        else return false;
+
     }
 }

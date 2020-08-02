@@ -11,6 +11,10 @@ public interface AnswerService {
     Answer findByID(Long id);
     void save(Answer answer);
     void delete(Long id);
-    Answer findByText(String text);
+
+
     int countProperAnswers(Question question);
+
+
+    boolean doAnswerExist(Question question, String answerText);
 }

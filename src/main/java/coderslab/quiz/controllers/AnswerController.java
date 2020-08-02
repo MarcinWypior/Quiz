@@ -42,12 +42,17 @@ public class AnswerController {
     }
 
     @PostMapping("/formAnswer/{question_id}")
-    public String postAnswerForm(@Valid @ModelAttribute Answer answer, BindingResult bindingResult, @PathVariable long question_id, Model model) {
+    public String postAnswerForm(@Valid @ModelAttribute Answer answer, BindingResult bindingResult, @PathVariable Long question_id, Model model) {
 
-        if(answerService.findByText(answer.getText())!=null)
-            bindingResult.addError(new FieldError("Answer","text","taka odpowiedz już istnieje"));
+        boolean doAnswerExist=answerService.doAnswerExist(questionService.findById(question_id),answer.getText());
+
+        if(doAnswerExist) {
+            bindingResult.addError(new FieldError("Answer", "text", answer.getText(), false, null, null, "taka odpowiedź już istnieje"));
+            //bindingResult.addError(new FieldError("Answer","text","taka odpowiedz już istnieje"));
+        }
 
         if (bindingResult.hasErrors()) {
+            model.addAttribute("question", questionService.findById(question_id));
             return "answerForm";
         }
 
@@ -64,11 +69,6 @@ public class AnswerController {
     @GetMapping("/deleteAnswer/{id}")
     public String deleteAnswer(Model model, @PathVariable long id) {
 
-
-
-//        answerService.delete(id);
-//        Answer firstById = answerService.findByID(id);
-//        answerRepository.delete(firstById);
         Question question = answerService.findByID(id).getQuestion();
         answerService.delete(id);
         model.addAttribute("question",question);

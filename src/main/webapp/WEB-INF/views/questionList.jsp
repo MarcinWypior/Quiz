@@ -10,7 +10,7 @@
 <html>
 <head>
     <title>lista kategorii</title>
-    <link rel="stylesheet" href="<c:url value="../../resources/css/style.css"/>"/>
+    <link rel="stylesheet" href="<c:url value="../../resources/css/quiz.css"/>"/>
 </head>
 <body>
 <div class="content">

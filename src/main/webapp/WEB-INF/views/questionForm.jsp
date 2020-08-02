@@ -9,7 +9,7 @@
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
-    <link rel="stylesheet" href="<c:url value="../../resources/css/style.css"/>"/>
+    <link rel="stylesheet" href="<c:url value="../../resources/css/quiz.css"/>"/>
 </head>
 <body>
 <div class="content">
@@ -47,8 +47,23 @@
         </c:if>
 
 
-        <input type="text" name="pictureAddress">
+        <input type="checkbox" name="pictureIncluded" value="true" >
+        
+        <input type="text" name="pictureLink">
 
+        <div>
+            <input type="radio" id="local"
+                   name="pictureLocation" value="local">
+            <label for="local">wewnetrzny</label>
+
+            <input type="radio" id="link"
+                   name="pictureLocation" value="link">
+            <label for="link">link</label>
+
+            <input type="radio" id="external"
+                   name="pictureLocation" value="external">
+            <label for="external">zewnętrzny</label>
+        </div>
 
         <input class="query" type="file" name="file" />
     </div>
