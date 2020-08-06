@@ -27,6 +27,8 @@ public interface QuestionService {
 
     Boolean savePicture(Question question, MultipartFile file);
 
+    Boolean saveInCloudinary(Question question, MultipartFile file);
+
     Boolean deletePicture(Question question);
 
 //    @Query("SELECT b FROM Book b WHERE b.category = :category")

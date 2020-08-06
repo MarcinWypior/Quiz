@@ -23,6 +23,7 @@ import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class QuestionServiceImpl implements QuestionService {
@@ -135,6 +136,30 @@ public class QuestionServiceImpl implements QuestionService {
 
         if (file.getSize() > 0)
             question.setPicture("../../" + path1.toString().substring(16));
+
+        return true;
+    }
+
+    @Override
+    public Boolean saveInCloudinary(Question question, MultipartFile file){
+
+
+        Cloudinary cloudinary = new Cloudinary(ObjectUtils.asMap(
+                "cloud_name", "marcin1136",
+                "api_key", "737373993878471",
+                "api_secret", "m59_i4tJ2O2pmBuTrGW0W5USEKA"));
+
+
+
+        try {
+            Map uploadResults = cloudinary.uploader().upload(file.getBytes(), ObjectUtils.emptyMap());
+            System.out.println("link do wypchniętego obrazka"+uploadResults.get("url"));
+            System.out.println(" \n link do wypchniętego obrazka"+uploadResults.get("public_id"+"\n"));
+            question.setPicture(uploadResults.get("url").toString());
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
 
         return true;
     }
