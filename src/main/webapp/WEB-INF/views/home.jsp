@@ -36,7 +36,7 @@
 
   <th class="dropdown-menu">
     <a href="/questionList">
-      dodaj swoje pytanie
+      lista Pytań
     </a>
   </th>
 

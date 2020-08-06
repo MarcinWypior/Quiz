@@ -63,7 +63,11 @@ public class QuestionController {
         if (question.getPicture() == null)
             question.setPicture(questionService.findById(question.getId()).getPicture());
 
-        if (pictureIncluded) {
+        if(pictureIncluded==null) {
+            questionService.deletePicture(question);
+            System.out.println("usuwam stary obrazek");
+        }
+        else if(pictureIncluded) {
             switch (pictureLocation) {
                 case "local":
                     questionService.savePicture(question, file);
@@ -80,25 +84,24 @@ public class QuestionController {
                             "api_key", "737373993878471",
                             "api_secret", "m59_i4tJ2O2pmBuTrGW0W5USEKA"));
 
+                    questionService.deletePicture(question);
+
                     try {
                         Map uploadResults = cloudinary.uploader().upload(file.getBytes(), ObjectUtils.emptyMap());
                         System.out.println("link do wypchniętego obrazka"+uploadResults.get("url"));
+                        System.out.println(" \n link do wypchniętego obrazka"+uploadResults.get("public_id"+"\n"));
                         question.setPicture(uploadResults.get("url").toString());
                     } catch (IOException e) {
                         e.printStackTrace();
                         System.out.println("hosting się zjebał");
                     }
 
-
                     break;
                 default:
                     break;
             }
 
-        } else {
-            questionService.deletePicture(question);
         }
-
 
         questionService.save(question);
 

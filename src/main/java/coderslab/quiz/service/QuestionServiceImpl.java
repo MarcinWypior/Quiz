@@ -7,6 +7,8 @@ import coderslab.quiz.interfaces.QuestionService;
 import coderslab.quiz.repositories.AnswerRepository;
 import coderslab.quiz.repositories.QuestionRepository;
 import coderslab.quiz.repositories.UserRepository;
+import com.cloudinary.Cloudinary;
+import com.cloudinary.utils.ObjectUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -39,13 +41,13 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     @Override
-    public List<Answer> findTrueAnswers(Question question){
+    public List<Answer> findTrueAnswers(Question question) {
 
-        List<Answer> trueAnswers=new ArrayList<>();
-        List<Integer>properAnswersIDs=new ArrayList<>();
-        question.getAnswerList().stream().forEach(answer->{
+        List<Answer> trueAnswers = new ArrayList<>();
+        List<Integer> properAnswersIDs = new ArrayList<>();
+        question.getAnswerList().stream().forEach(answer -> {
             {
-                if(answer.isProper())
+                if (answer.isProper())
                     trueAnswers.add(answer);
             }
         });
@@ -59,17 +61,16 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     @Override
-    public List<Question> findAllinCategory(String categoryName)
-    {
+    public List<Question> findAllinCategory(String categoryName) {
         return questionRepository.findAllByCategoryCategoryName(categoryName);
     }
 
     @Override
     public boolean doesQuestionExist(String questionQuery) {
-        if(questionRepository.findFirstByQuery(questionQuery)!=null)
-        return true;
+        if (questionRepository.findFirstByQuery(questionQuery) != null)
+            return true;
         else
-        return false;
+            return false;
     }
 
     @Override
@@ -96,8 +97,8 @@ public class QuestionServiceImpl implements QuestionService {
         return question.getAnswerList();
     }
 
-    public Question findByQuery(String query){
-       return questionRepository.findByQuery(query);
+    public Question findByQuery(String query) {
+        return questionRepository.findByQuery(query);
     }
 
     @Override
@@ -111,12 +112,12 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     @Override
-    public Boolean savePicture(Question question, MultipartFile file){
+    public Boolean savePicture(Question question, MultipartFile file) {
 
         String[] elemnts = file.getOriginalFilename().split("\\.");
         Path path1 = Paths.get("src/main/webapp/resources/uploaded/pictures/" + Timestamp.valueOf(LocalDateTime.now()) + "." + elemnts[elemnts.length - 1]);
 
-        if (file.getSize()>0) {
+        if (file.getSize() > 0) {
 
             deletePicture(question);
 
@@ -132,16 +133,16 @@ public class QuestionServiceImpl implements QuestionService {
             }
         }
 
-        if(file.getSize()>0)
-            question.setPicture("../../"+path1.toString().substring(16));
+        if (file.getSize() > 0)
+            question.setPicture("../../" + path1.toString().substring(16));
 
         return true;
     }
 
     @Override
-    public Boolean deletePicture(Question question){
+    public Boolean deletePicture(Question question) {
 
-        if((question.getPicture() != null)&&(question.getPicture()).startsWith("../../resources/uploaded/pictures")) {
+        if ((question.getPicture() != null) && (question.getPicture()).startsWith("../../resources/uploaded/pictures")) {
 
             //TODO ten blok trzeba przenieść gdziś indziej
             try {
@@ -154,9 +155,27 @@ public class QuestionServiceImpl implements QuestionService {
             question.setPicture(null);
             System.out.println("picture deleted");
             return true;
-        }else {
+        } else if ((question.getPicture() != null) && (question.getPicture().startsWith("http://res.cloudinary.com/marcin1136/image/upload/"))) {
+            Cloudinary cloudinary = new Cloudinary(ObjectUtils.asMap(
+                    "cloud_name", "marcin1136",
+                    "api_key", "737373993878471",
+                    "api_secret", "m59_i4tJ2O2pmBuTrGW0W5USEKA"));
+
+            String publicID = question.getPicture().substring(50).split("/")[1].split("\\.")[0];
+
+            try {
+                cloudinary.uploader().destroy(publicID, ObjectUtils.emptyMap());
+            } catch (IOException e) {
+                e.printStackTrace();
+                return false;
+            }
+
             question.setPicture(null);
-            System.out.println("picture in not uploaded on local server");
+            return true;
+
+        } else {
+            question.setPicture(null);
+            System.out.println("picture in not uploaded on local or remote server");
             return false;
         }
     }
